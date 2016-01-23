@@ -6,6 +6,7 @@ public class DucklingScript : MonoBehaviour {
 	private GameObject mamaWayPoint;
 	private Vector3 wayPointPos;
 	public float speed;
+	public float wanderIntensity;
 	private Vector3 wanderDir;
 	public int numFramesToWander;
 	private int numFramesLeft;
@@ -47,6 +48,6 @@ public class DucklingScript : MonoBehaviour {
 	}
 
 	Vector3 GetWanderDir () {
-		return new Vector3 (Random.Range (0, transform.localScale.x)/numFramesToWander, 0, Random.Range (0, transform.localScale.z)/numFramesToWander);
+		return new Vector3 (Random.Range (-1*transform.localScale.x, transform.localScale.x), 0, Random.Range (-1*transform.localScale.z, transform.localScale.z)) * wanderIntensity / numFramesToWander;
 	}
 }
