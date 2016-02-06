@@ -116,7 +116,7 @@ public class MainMenuScript : MonoBehaviour
 			int tempInt = GUI.SelectionGrid (new Rect (.5f * Screen.width - 125, .4f * Screen.height, 250, .4f * Screen.height), levelGridInt, levelStrings, 5);
 			//This if statement is used to prevent us from running the remaining logic too often, especially in OnGUI.
 			if (tempInt != levelGridInt) {
-				Application.LoadLevel ("ExampleSimpleScene");
+				Application.LoadLevel ("Parks_LevelOne");
 				/* if (GameControllerScript.Instance.getCurrentUnlockedLevel () <= tempInt) {
 					text = "You haven't unlocked level " + (tempInt + 1).ToString () + " yet.";
 				} else {
