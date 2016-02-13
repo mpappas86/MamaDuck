@@ -222,7 +222,7 @@ MonoBehaviour:
   settingsMenu: 0
   levelMenu: 0
   soundTest: 0
-  customSkin: {fileID: 11400000, guid: 9a4df77e590476646ac48706b4c3c260, type: 2}
+  customSkin: {fileID: 11400000, guid: 15588f9f733584ec1b3930df9ce7113a, type: 2}
   level1: {fileID: 77849657}
   mainTheme: {fileID: 286236672}
   endCredits: {fileID: 1857197448}
