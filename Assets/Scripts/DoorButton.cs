@@ -7,6 +7,7 @@ public class DoorButton : MonoBehaviour {
 	public float removeSpeed;
 	private Vector3 wall_inital_position;
 	private bool contactWithMama = false;
+	public bool makePassable = true;
 
 	void Start(){
 		wall_inital_position = wall_to_remove.transform.position;
@@ -28,6 +29,9 @@ public class DoorButton : MonoBehaviour {
 				Vector3 end = this.wall_inital_position - new Vector3 (0, this.wall_to_remove.transform.localScale.y * 2, 0);
 				this.wall_to_remove.transform.position += (end - this.wall_inital_position)*Time.deltaTime*this.removeSpeed;
 				if (this.wall_to_remove.transform.position.y <= end.y){
+					if (this.makePassable && this.wall_to_remove.transform.parent != null){
+						((BaseTileScript)this.wall_to_remove.transform.GetComponentInParent(typeof(BaseTileScript))).amPassable = true;
+					}
 					Destroy(this.wall_to_remove);
 				}
 			}

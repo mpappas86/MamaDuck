@@ -1288,7 +1288,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11445532, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: speed
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 101902, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: m_TagString
@@ -1296,7 +1296,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11445532, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: wanderIntensity
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 13629998, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: m_IsTrigger

@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Duckling
   - Sewer Grate
+  - Tile
   layers:
   - Default
   - TransparentFX
