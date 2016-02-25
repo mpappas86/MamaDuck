@@ -16,7 +16,12 @@ public class DucklingScript : MonoBehaviour {
 	private Rigidbody rb;
 	private bool shouldFallAndDie = false;
 	private PlayerControl mamaScript;
-	
+	private bool[] valid_moves;
+	private bool isMoving;
+	private Vector3 movingVec;
+	private int movingDir;
+	private float movedDistance;
+
 	void Start ()
 	{
 		rb = this.gameObject.GetComponent<Rigidbody> ();
@@ -29,21 +34,20 @@ public class DucklingScript : MonoBehaviour {
 		mamaScript = GameObject.Find ("MamaDuck").GetComponent<PlayerControl> ();
 	}
 
-	void OnCollisionEnter (Collision other){
-		if (contactWithMama) {
-			return;
-		}
-		if (other.gameObject.name == "MamaDuck") {
-			contactWithMama = true;
-			mamaScript.ducklingCount += 1;
-			mamaScript.setMainText();
-		}
+	public void setValidMoves(bool[] new_valid_moves){
+		this.valid_moves = new_valid_moves;
 	}
 
 	void OnTriggerEnter( Collider other){
 		if (other.gameObject.CompareTag("Sewer Grate")) {
 			rb.constraints = RigidbodyConstraints.FreezeAll;
 			this.shouldFallAndDie = true;
+		} else if (contactWithMama) {
+			return;
+		} else if (other.gameObject.name == "MamaDuck") {
+			contactWithMama = true;
+			mamaScript.ducklingCount += 1;
+			mamaScript.setMainText();
 		}
 	}
 
@@ -54,12 +58,63 @@ public class DucklingScript : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		Vector3 moveDir = Vector3.zero;
+		Vector3 coreMovement = transform.position;
 		if (contactWithMama) {
-			moveDir = MoveViaWaypoint();
+			if (this.isMoving) {
+				coreMovement = GetCoreMovement();
+			} else {
+				SetupMoveViaWaypoint();
+				this.isMoving = true;
+			}
 		}
-		moveDir += DucklingRandomMovement();
-		rb.MovePosition (transform.position + moveDir * Time.deltaTime);
+		Vector3 randomMovement = DucklingRandomMovement();
+		rb.MovePosition (randomMovement + coreMovement);
+	}
+
+	void SetupMoveViaWaypoint() {
+		wayPointPos = new Vector3 (mamaWayPoint.transform.position.x, transform.position.y, mamaWayPoint.transform.position.z);
+		Vector3 wayPointDir = wayPointPos - transform.position;
+		if (Mathf.Abs (wayPointDir[0]) >= Mathf.Abs (wayPointDir[2])) {
+			this.movingDir = (int)(2.5 + Mathf.Sign (wayPointDir[0]) * 0.5);
+			this.movingVec = new Vector3 (Mathf.Sign (wayPointDir[0]), 0, 0);
+		} else {
+			this.movingDir = (int)(0.5 - Mathf.Sign (wayPointDir[2]) * 0.5);
+			this.movingVec = new Vector3 (0, 0, Mathf.Sign (wayPointDir[2]));
+		}
+	}
+
+	Vector3 GetCoreMovement (){
+		Vector3 coreMovement = transform.position;
+		if (this.valid_moves == null) {
+			return transform.position;
+		}
+		if (!isMoving) {
+			if (movingDir == -1){
+				return transform.position;
+			}
+			if (this.valid_moves[movingDir]){
+				isMoving = true;
+			}
+		}
+		if (isMoving) {
+			float toMove = speed * Time.deltaTime;
+			this.movedDistance += speed * Time.deltaTime;
+			if (this.movedDistance >= 1) {
+				toMove = speed * Time.deltaTime - (movedDistance - 1);
+				this.movedDistance = 1;
+			}
+			coreMovement = transform.position + this.movingVec * toMove;
+		} else {
+			return transform.position;
+		}
+		if (this.movedDistance == 1) {
+			this.isMoving = false;
+			this.movingDir = -1;
+			this.movingVec = new Vector3(0, 0, 0);
+			this.movedDistance = 0;
+		}
+		return coreMovement;
+
 	}
 
 	Vector3 DucklingRandomMovement(){
@@ -76,13 +131,7 @@ public class DucklingScript : MonoBehaviour {
 				plannedMove = Vector3.zero;
 			}
 		}
-		return plannedMove;
-	}
-
-	Vector3 MoveViaWaypoint() {
-		wayPointPos = new Vector3 (mamaWayPoint.transform.position.x, transform.position.y, mamaWayPoint.transform.position.z);
-		Vector3 wayPointDir = wayPointPos - transform.position;
-		return wayPointDir*speed;
+		return plannedMove*Time.deltaTime;
 	}
 
 	Vector3 GetWanderDir () {

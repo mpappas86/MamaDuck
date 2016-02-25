@@ -17,6 +17,11 @@ public class TileTrigger : MonoBehaviour {
 			bool[] valid_moves = bts.MamaDuckEntered ();
 			PlayerControl pc = (PlayerControl) other.GetComponent(typeof(PlayerControl));
 			pc.setValidMoves(valid_moves);
+		} else if (other.CompareTag("Duckling")) {
+			BaseTileScript bts = (BaseTileScript) this.gameObject.GetComponentInParent (typeof(BaseTileScript));
+			bool[] valid_moves = bts.MamaDuckEntered ();
+			DucklingScript ds = (DucklingScript) other.GetComponent(typeof(DucklingScript));
+			ds.setValidMoves(valid_moves);
 		}
 	}
 }

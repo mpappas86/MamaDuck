@@ -30,7 +30,8 @@ public class DoorButton : MonoBehaviour {
 				this.wall_to_remove.transform.position += (end - this.wall_inital_position)*Time.deltaTime*this.removeSpeed;
 				if (this.wall_to_remove.transform.position.y <= end.y){
 					if (this.makePassable && this.wall_to_remove.transform.parent != null){
-						((BaseTileScript)this.wall_to_remove.transform.GetComponentInParent(typeof(BaseTileScript))).amPassable = true;
+						BaseTileScript bts = ((BaseTileScript)this.wall_to_remove.transform.GetComponentInParent(typeof(BaseTileScript)));
+						bts.amPassable = true;
 					}
 					Destroy(this.wall_to_remove);
 				}

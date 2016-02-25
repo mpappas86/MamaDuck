@@ -69,10 +69,15 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 		if (isMoving) {
-			this.rb.MovePosition (transform.position + this.movingVec * speed * Time.deltaTime);
+			float toMove = speed*Time.deltaTime;
 			this.movedDistance += speed*Time.deltaTime;
+			if (this.movedDistance >= 1){
+				toMove = speed*Time.deltaTime - (movedDistance - 1);
+				this.movedDistance = 1;
+			}
+			this.rb.MovePosition (transform.position + this.movingVec * toMove);
 		}
-		if (this.movedDistance >= 1) {
+		if (this.movedDistance == 1) {
 			this.isMoving = false;
 			this.movingDir = -1;
 			this.movingVec = new Vector3(0, 0, 0);
