@@ -123,6 +123,10 @@ public class PlayerControl : MonoBehaviour {
 		this.ducklingCount -= 1;
 		this.mainText.text = "You just lost a duckling to a " + cause + "! You monster!";
 	}
+
+	public int getScore(){
+		return this.score;
+	}
 	
 
 }

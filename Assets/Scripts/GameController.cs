@@ -13,11 +13,14 @@ public class GameController : MonoBehaviour {
 	private List<Color> cutoffColors = new List<Color>();
 
 	private bool runTimer = true;
+	private bool levelOver = false;
+	private int finalScore = 0;
 
 	void Start () {
 		if (timeCutoffs.Length != cutoffBonuses.Length) {
 			throw new System.Exception("Time cutoffs and cutoff bonuses must have the same length!");
 		}
+		Time.timeScale = 1;
 		timer = 0;
 		cutoffColors.Add (Color.green);
 		cutoffColors.Add (Color.black);
@@ -59,5 +62,38 @@ public class GameController : MonoBehaviour {
 			curCutoff = this.cutoffColors.Count - 1;
 		}
 		this.timerText.color = this.cutoffColors [curCutoff];
+	}
+
+	public void endLevel(){
+		this.runTimer = false;
+		this.levelOver = true;
+		this.finalScore = this.getTimeBonus () + this.getPlayerScore ();
+		Time.timeScale = 0;
+	}
+
+	private int getPlayerScore(){
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
+		PlayerControl playerScript = (PlayerControl)player.GetComponent(typeof(PlayerControl));
+		return playerScript.getScore();
+	}
+
+	void OnGUI ()
+	{
+		if (levelOver) {
+			GUIStyle winStyle = new GUIStyle ();
+			winStyle.fontStyle = FontStyle.BoldAndItalic;
+			winStyle.fontSize = 20;
+			winStyle.alignment = TextAnchor.UpperCenter;
+			string winText = "You Won!\nFinal score: " + this.finalScore.ToString();
+			GUI.Box (new Rect (.5f * Screen.width - 200, .1f * Screen.height, 400, .18f * Screen.height), winText, winStyle);
+			
+			
+			if (GUI.Button (new Rect (.5f * Screen.width - 200, .75f * Screen.height, 400, .08f * Screen.height), "Return to Menu?")) {
+				Application.LoadLevel ("MainMenu");
+			}
+			if (GUI.Button (new Rect (.5f * Screen.width - 200, .55f * Screen.height, 400, .08f * Screen.height), "Replay?")) {
+				Application.LoadLevel (Application.loadedLevel);
+			}
+		}
 	}
 }
