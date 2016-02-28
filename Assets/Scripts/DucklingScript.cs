@@ -46,8 +46,7 @@ public class DucklingScript : MonoBehaviour {
 			return;
 		} else if (other.gameObject.name == "MamaDuck") {
 			contactWithMama = true;
-			mamaScript.ducklingCount += 1;
-			mamaScript.setMainText();
+			mamaScript.ObtainDuckling(this.gameObject);
 		}
 	}
 
@@ -135,15 +134,14 @@ public class DucklingScript : MonoBehaviour {
 	}
 
 	Vector3 GetWanderDir () {
-		return new Vector3 (Random.Range (-1*transform.localScale.x, transform.localScale.x), 0, Random.Range (-1*transform.localScale.z, transform.localScale.z)) * wanderIntensity / numFramesToWander;
+		return new Vector3 (Random.Range (-1, 1), 0, Random.Range (-1, 1)) / numFramesToWander;
 	}
 
 	void FallAndDie() {
 		transform.position = new Vector3 (transform.position.x, transform.position.y - Time.deltaTime, transform.position.z);
 		if (transform.position.y < -2) {
 			if (contactWithMama) {
-				mamaScript.ducklingCount -= 1;
-				mamaScript.MurderDuckling("Sewer Grate");
+				mamaScript.MurderDuckling(this.gameObject, "Sewer Grate");
 			}
 			GameObject.Destroy(this);
 		}

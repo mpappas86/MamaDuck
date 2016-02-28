@@ -7,9 +7,10 @@ public class PlayerControl : MonoBehaviour {
     public float speed;
 	public GameObject wayPoint;
 	public Text mainText;
+	private int score = 0;
 	
 	private float wayPointTimer = 0.5f;
-	private int breadCount = 0;
+	public int breadCountScore = 100;
 	private Vector3 movingVec;
 	private int movingDir = -1;
 	private float movedDistance = 0;
@@ -85,7 +86,12 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	void UpdateWaypoint ()
+	public void ObtainDuckling(GameObject duckling){	
+		this.ducklingCount += 1;
+		this.setMainText ();
+	}
+		
+		void UpdateWaypoint ()
 	{
 		this.wayPoint.transform.position = this.transform.position;
 	}
@@ -93,7 +99,7 @@ public class PlayerControl : MonoBehaviour {
 	void OnTriggerEnter(Collider other) 
 	{
 		if (other.gameObject.CompareTag ("Breadcrumb")) {
-			this.breadCount += 1;
+			this.score += breadCountScore;
 			other.gameObject.SetActive (false);
 			setMainText ();
 		}
@@ -110,10 +116,11 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void setMainText(){
-		this.mainText.text = DucklingText() + "\nBreadcrumbs: " + this.breadCount.ToString ();
+		this.mainText.text = DucklingText() + "\nScore: " + this.score.ToString ();
 	}
 
-	public void MurderDuckling(string cause){
+	public void MurderDuckling(GameObject duckling, string cause){
+		this.ducklingCount -= 1;
 		this.mainText.text = "You just lost a duckling to a " + cause + "! You monster!";
 	}
 	
