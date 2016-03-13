@@ -10,7 +10,7 @@ public class DucklingScript : MonoBehaviour {
 	private Vector3 wanderDir;
 	public int numFramesToWander;
 	private int numFramesLeft;
-	private bool contactWithMama;
+	public bool contactWithMama;
 	public float containerRadius;
 	private Vector3 initialLocation;
 	private Rigidbody rb;
@@ -31,7 +31,7 @@ public class DucklingScript : MonoBehaviour {
 		numFramesLeft = numFramesToWander;
 		contactWithMama = false;
 		initialLocation = this.gameObject.transform.position;
-		mamaScript = GameObject.Find ("MamaDuck").GetComponent<PlayerControl> ();
+		mamaScript = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerControl> ();
 	}
 
 	public void setValidMoves(bool[] new_valid_moves){
@@ -44,7 +44,7 @@ public class DucklingScript : MonoBehaviour {
 			this.shouldFallAndDie = true;
 		} else if (contactWithMama) {
 			return;
-		} else if (other.gameObject.name == "MamaDuck") {
+		} else if (other.gameObject.CompareTag("Player")) {
 			contactWithMama = true;
 			mamaScript.ObtainDuckling(this.gameObject);
 		}

@@ -5,18 +5,18 @@ using System.Linq;
 
 public class BaseTileScript : MonoBehaviour {
 	
-	public bool amPassable = true;
+	public bool[] amPassable = {true, true, true, true};
 	private List<GameObject> adjacent_tiles = null;
 
 	public void Move (int up_down, int left_right) {
 		gameObject.transform.position = gameObject.transform.position + new Vector3 (left_right, 0, up_down);
 	}
 
-	private bool is_valid_move(GameObject tile){
+	private bool is_valid_move(GameObject tile, int dir){
 		if (tile == null) {
 			return false;
 		} else {
-			return ((BaseTileScript)tile.GetComponent(typeof(BaseTileScript))).canPass();
+			return ((BaseTileScript)tile.GetComponent(typeof(BaseTileScript))).canPass(dir);
 		}
 	}
 
@@ -25,15 +25,15 @@ public class BaseTileScript : MonoBehaviour {
 			adjacent_tiles = getAdjacentTiles();
 		}
 		bool[] valid_moves = new bool[4];
-		valid_moves [0] = is_valid_move (adjacent_tiles [0]);
-		valid_moves [1] = is_valid_move (adjacent_tiles [1]);
-		valid_moves [2] = is_valid_move (adjacent_tiles [2]);
-		valid_moves [3] = is_valid_move (adjacent_tiles [3]);
+		valid_moves [0] = is_valid_move (adjacent_tiles [0], 0);
+		valid_moves [1] = is_valid_move (adjacent_tiles [1], 1);
+		valid_moves [2] = is_valid_move (adjacent_tiles [2], 2);
+		valid_moves [3] = is_valid_move (adjacent_tiles [3], 3);
 		return valid_moves;
 	}
 
-	public bool canPass(){
-		return this.amPassable;
+	public bool canPass(int dir){
+		return this.amPassable[dir];
 	}
 
 	private List<GameObject> getAdjacentTiles () {

@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour {
 
 	private float timer;
 
+	public GameObject[] tiers;
+	public int currentTier = 0;
 	public int[] timeCutoffs; // in seconds
 	public int[] cutoffBonuses;
 	public Text timerText;
@@ -32,6 +34,26 @@ public class GameController : MonoBehaviour {
 			timer += Time.deltaTime;
 			setTimerText();
 		}
+	}
+
+	public void TierChange(bool up){
+		int up_down = up ? 1 : -1;
+		GameObject newTier = tiers [currentTier + up_down];
+		GameObject oldTier = tiers [currentTier];
+		float ydiff = newTier.transform.position.y - oldTier.transform.position.y;
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		player.transform.position += new Vector3 (0, ydiff, 0);
+		GameObject[] ducklings = GameObject.FindGameObjectsWithTag("Duckling");
+		foreach (GameObject ducky in ducklings) {
+			DucklingScript dc = ducky.GetComponent<DucklingScript>();
+			if (dc.contactWithMama){
+				dc.transform.position += new Vector3 (0, ydiff, 0);
+			}
+		}
+		newTier.SetActive (true);
+		oldTier.SetActive (false);
+		this.currentTier = currentTier + up_down;
+		
 	}
 
 	private int getCurCutoff(){

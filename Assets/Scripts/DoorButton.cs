@@ -8,16 +8,19 @@ public class DoorButton : MonoBehaviour {
 	private Vector3 wall_inital_position;
 	private bool contactWithMama = false;
 	public bool makePassable = true;
+	private bool vert_orientation;
 
 	void Start(){
 		wall_inital_position = wall_to_remove.transform.position;
+		// True is left-right orientation, False is up-down
+		vert_orientation = this.transform.localRotation.y == 90;
 	}
 
 	void OnTriggerEnter (Collider other){
 		if (this.contactWithMama) {
 			return;
 		}
-		if (other.gameObject.name == "MamaDuck") {
+		if (other.gameObject.CompareTag("Player")) {
 			this.contactWithMama = true;
 			this.gameObject.GetComponent<Renderer>().material.color = Color.red;
 		}
@@ -31,7 +34,13 @@ public class DoorButton : MonoBehaviour {
 				if (this.wall_to_remove.transform.position.y <= end.y){
 					if (this.makePassable && this.wall_to_remove.transform.parent != null){
 						BaseTileScript bts = ((BaseTileScript)this.wall_to_remove.transform.GetComponentInParent(typeof(BaseTileScript)));
-						bts.amPassable = true;
+						if(vert_orientation){
+							bts.amPassable[2] = true;
+							bts.amPassable[3] = true;
+						} else {
+							bts.amPassable[0] = true;
+							bts.amPassable[1] = true;
+						}
 					}
 					Destroy(this.wall_to_remove);
 				}
