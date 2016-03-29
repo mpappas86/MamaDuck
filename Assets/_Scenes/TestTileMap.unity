@@ -1898,7 +1898,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 488954, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 488954, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1942,7 +1942,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11445532, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: wanderIntensity
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11445532, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
+      propertyPath: numFramesToWander
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}

@@ -2,38 +2,30 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class PlayerControl : MonoBehaviour {
-
-    public float speed;
+public class PlayerControl : BaseTileMover {
+	
 	public GameObject wayPoint;
 	public Text mainText;
 	private int score = 0;
 	
 	private float wayPointTimer = 0.5f;
 	public int breadCountScore = 100;
-	private Vector3 movingVec;
-	private int movingDir = -1;
-	private float movedDistance = 0;
-	private bool isMoving;
 	public int ducklingCount = 0;
 	public int totalDucklings;
-	private Rigidbody rb;
-	private bool[] valid_moves;
 
 	// Up, Down, Left, Right = 0, 1, 2, 3
 
-	void Start ()
+	public override void Start ()
     {
+		base.Start();
 		setMainText();
-		rb = this.gameObject.GetComponent<Rigidbody> ();
-		rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
     }
 	
 	void Update ()
 	{
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
-		if (!isMoving) {
+		if (!this.isMoving) {
 			// I don't want it moving both directions at once, so just move horizontally if both are pressed.
 			if (moveHorizontal != 0) {
 				this.movingDir = (int)(2.5 + Mathf.Sign (moveHorizontal) * 0.5);
@@ -53,39 +45,11 @@ public class PlayerControl : MonoBehaviour {
 
 	}
 
-	public void setValidMoves(bool[] new_valid_moves){
-		this.valid_moves = new_valid_moves;
+	void FixedUpdate()
+	{
+		this.rb.MovePosition (this.GetTileMove ());
 	}
-
-	void FixedUpdate (){
-		if (this.valid_moves == null) {
-			return;
-		}
-		if (!isMoving) {
-			if (movingDir == -1){
-				return;
-			}
-			if (this.valid_moves[movingDir]){
-				isMoving = true;
-			}
-		}
-		if (isMoving) {
-			float toMove = speed*Time.deltaTime;
-			this.movedDistance += speed*Time.deltaTime;
-			if (this.movedDistance >= 1){
-				toMove = speed*Time.deltaTime - (movedDistance - 1);
-				this.movedDistance = 1;
-			}
-			this.rb.MovePosition (transform.position + this.movingVec * toMove);
-		}
-		if (this.movedDistance == 1) {
-			this.isMoving = false;
-			this.movingDir = -1;
-			this.movingVec = new Vector3(0, 0, 0);
-			this.movedDistance = 0;
-		}
-	}
-
+	
 	public void ObtainDuckling(GameObject duckling){	
 		this.ducklingCount += 1;
 		this.setMainText ();

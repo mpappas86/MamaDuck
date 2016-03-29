@@ -4,8 +4,10 @@ using System.Collections;
 public class TileTrigger : MonoBehaviour {
 
 	public bool amStartingTile = false;
+	private BaseTileScript bts;
 
 	void Start(){
+		bts = (BaseTileScript) this.gameObject.GetComponentInParent (typeof(BaseTileScript));
 		if (amStartingTile) {
 			OnTriggerEnter(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>());
 		}
@@ -13,15 +15,15 @@ public class TileTrigger : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag("Player")) {
-			BaseTileScript bts = (BaseTileScript) this.gameObject.GetComponentInParent (typeof(BaseTileScript));
-			bool[] valid_moves = bts.MamaDuckEntered ();
-			PlayerControl pc = (PlayerControl) other.GetComponent(typeof(PlayerControl));
-			pc.setValidMoves(valid_moves);
+			setValidMoves(other, bts.MamaDuckEntered());
 		} else if (other.CompareTag("Duckling")) {
-			BaseTileScript bts = (BaseTileScript) this.gameObject.GetComponentInParent (typeof(BaseTileScript));
-			bool[] valid_moves = bts.MamaDuckEntered ();
-			DucklingScript ds = (DucklingScript) other.GetComponent(typeof(DucklingScript));
-			ds.setValidMoves(valid_moves);
+			setValidMoves(other, bts.MamaDuckEntered());
 		}
 	}
+
+	void setValidMoves(Collider obj, bool[] valid_moves){
+		BaseTileMover btm = (BaseTileMover) obj.GetComponent(typeof(BaseTileMover));
+		btm.setValidMoves(valid_moves);
+	}
+
 }
