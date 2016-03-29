@@ -4,16 +4,14 @@ using UnityEngine.UI;
 
 public class PlayerControl : BaseTileMover {
 	
-	public GameObject wayPoint;
-	public Text mainText;
-	private int score = 0;
+	public GameObject wayPoint;   // Invisible gameobject tracking Mama's location so duckling can follow
+	public Text mainText;         // Primary text object
+	private int score = 0;        // Player score
 	
-	private float wayPointTimer = 0.5f;
-	public int breadCountScore = 100;
-	public int ducklingCount = 0;
-	public int totalDucklings;
-
-	// Up, Down, Left, Right = 0, 1, 2, 3
+	private float wayPointTimer = 0.5f;  // How frequently we update the waypoint
+	public int breadCountScore = 100;    // How many points bread crumbs are worth.
+	public int ducklingCount = 0;        // Tracker for # ducklings we've collected
+	public int totalDucklings;           // Total ducklings that can be found in this level.
 
 	public override void Start ()
     {
@@ -23,6 +21,7 @@ public class PlayerControl : BaseTileMover {
 	
 	void Update ()
 	{
+		// Up, Down, Left, Right = 0, 1, 2, 3 for this.movingDir
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
 		if (!this.isMoving) {
@@ -36,6 +35,7 @@ public class PlayerControl : BaseTileMover {
 			}
 		}
 
+		// Every wayPointTimer seconds, update the waypoint position.
 		if (this.wayPointTimer > 0) {
 			this.wayPointTimer -= Time.deltaTime;
 		} else {
@@ -47,19 +47,26 @@ public class PlayerControl : BaseTileMover {
 
 	void FixedUpdate()
 	{
+		// Uses GetTileMove from the BaseTileMover class.
 		this.rb.MovePosition (this.GetTileMove ());
 	}
-	
-	public void ObtainDuckling(GameObject duckling){	
+
+	// Public method called by ducklings when mama reaches them so mama can update the score and text.
+	// TODO: Move text, score, and methods like this to the GameController?
+	public void ObtainDuckling()
+	{
 		this.ducklingCount += 1;
 		this.setMainText ();
 	}
 		
-		void UpdateWaypoint ()
+	// Just set the waypoint to our current position.
+	void UpdateWaypoint ()
 	{
 		this.wayPoint.transform.position = this.transform.position;
 	}
 
+	// We only handle collisions with items - ducklings, buttons, etc handle their special behavior when we hit them.
+	// TODO: Move this to GameController as well?
 	void OnTriggerEnter(Collider other) 
 	{
 		if (other.gameObject.CompareTag ("Breadcrumb")) {
@@ -69,6 +76,7 @@ public class PlayerControl : BaseTileMover {
 		}
 	}
 
+	// Text setter based on how many ducklings we've collected.
 	string DucklingText(){
 		if (this.ducklingCount == 0) {
 			return "No ducklings found!";
@@ -79,10 +87,12 @@ public class PlayerControl : BaseTileMover {
 		}
 	}
 
+	// Set the text that explains our duckling count and score.
 	public void setMainText(){
 		this.mainText.text = DucklingText() + "\nScore: " + this.score.ToString ();
 	}
 
+	// Score/text updater in the case that a duckling gets murdered.
 	public void MurderDuckling(GameObject duckling, string cause){
 		this.ducklingCount -= 1;
 		this.mainText.text = "You just lost a duckling to a " + cause + "! You monster!";
