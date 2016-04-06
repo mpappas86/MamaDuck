@@ -46,6 +46,8 @@ public class DoorButton : MonoBehaviour {
 						} else {
 							bts.amPassable[0] = true;
 							bts.amPassable[1] = true;
+							bts.amPassable[2] = true;
+							bts.amPassable[3] = true;
 						}
 					}
 					Destroy(this.wall_to_remove);
