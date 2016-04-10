@@ -12,7 +12,7 @@ public class TimeManager : MonoBehaviour {
 	private List<Color> cutoffColors = new List<Color>();  // Colors for the timer to be at each level of timing.
 	private bool runTimer = true;   // Whether the timer should currently be running.
 
-	void Start () {
+	public virtual void Start () {
 		if (timeCutoffs.Length != cutoffBonuses.Length) {
 			throw new System.Exception("Time cutoffs and cutoff bonuses must have the same length!");
 		}

@@ -12,7 +12,8 @@ public class GameController : TimeManager {
 	private bool levelOver = false; // Whether or not the level has ended.
 	private int finalScore = 0;     // Score the player accumulated, all things considered - to be tallied at level end.
 
-	void Start () {
+	public override void Start () {
+		base.Start();
 		// The GameController manages physics-time, and can set it to 0 to pause the game.
 		Time.timeScale = 1;
 	}
