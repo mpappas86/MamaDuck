@@ -9,7 +9,7 @@ public class DoorButton : MonoBehaviour {
 
 	private bool contactWithMama = false;  // Whether or not Mama has pressed us yet.
 	
-	// When Mama presses the button, register that and then turn red.
+	// When Mama presses the button, register that and then turn red. Then update every wall in case the wall should move.
 	void OnTriggerEnter (Collider other){
 		if (this.contactWithMama) {
 			return;

@@ -8,6 +8,14 @@ public class BaseTileScript : MonoBehaviour {
 	public bool[] amPassable = {true, true, true, true};  // Whether or not this tile can be passed through via each of the
 	                                                      // four possible directions.
 	private List<GameObject> adjacent_tiles = null;       // List of all adjacent tiles to this one.
+	private Renderer myRenderer;                          // Accessor to renderer to change colors.
+	private Color initialColor;                           // Initial color of the tile.
+	private float blinkCadence = 0.5f;                     // Rate at which to blink if something changes.
+
+	void Start(){
+		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
+		initialColor = myRenderer.material.color;
+	}
 
 	// This can be effectively ignored - it's used by the TileMapInspector Editor script, not used in the game.
 	public void Move (int up_down, int left_right) {
@@ -25,6 +33,8 @@ public class BaseTileScript : MonoBehaviour {
 
 	// Iterate across the tiles that are adjacent to you and report whether the walker can move into each of them.
 	public bool[] getValidMoves(bool force=false) {
+		StopCoroutine ("blink");
+		this.myRenderer.material.color = this.initialColor;
 		if (adjacent_tiles == null || force) {
 			adjacent_tiles = getAdjacentTiles();
 		}
@@ -39,6 +49,23 @@ public class BaseTileScript : MonoBehaviour {
 	// Can a walker pass through me from the given direction?
 	public bool canPass(int dir){
 		return this.amPassable[dir];
+	}
+
+	public void blinkUntilSteppedOn(float cadence=0.5f){
+		this.blinkCadence = cadence;
+		StartCoroutine("blink");
+	}
+
+	IEnumerator blink(){
+		for (;;) {
+			Color myColor = this.myRenderer.material.color;
+			if (myColor != Color.yellow) {
+				this.myRenderer.material.color = Color.yellow;
+			} else {
+				this.myRenderer.material.color = Color.white;
+			}
+			yield return new WaitForSeconds (this.blinkCadence);
+		}
 	}
 
 	// Much less sophisticate than this looks - all it's really doing is, from our tile, checking for any other
