@@ -10,7 +10,8 @@ public class BaseTileScript : MonoBehaviour {
 	private List<GameObject> adjacent_tiles = null;       // List of all adjacent tiles to this one.
 	private Renderer myRenderer;                          // Accessor to renderer to change colors.
 	private Color initialColor;                           // Initial color of the tile.
-	private float blinkCadence = 0.5f;                     // Rate at which to blink if something changes.
+	private float blinkCadence = 0.5f;                    // Rate at which to blink if something changes.
+	private bool amBlinking = false;                      // Whether I'm goddamn blinking.
 
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
@@ -33,8 +34,11 @@ public class BaseTileScript : MonoBehaviour {
 
 	// Iterate across the tiles that are adjacent to you and report whether the walker can move into each of them.
 	public bool[] getValidMoves(bool force=false) {
-		StopCoroutine ("blink");
-		this.myRenderer.material.color = this.initialColor;
+		if (this.amBlinking) {
+			StopCoroutine ("blink");
+			this.myRenderer.material.color = this.initialColor;
+			this.amBlinking = false;
+		}
 		if (adjacent_tiles == null || force) {
 			adjacent_tiles = getAdjacentTiles();
 		}
@@ -53,6 +57,7 @@ public class BaseTileScript : MonoBehaviour {
 
 	public void blinkUntilSteppedOn(float cadence=0.5f){
 		this.blinkCadence = cadence;
+		this.amBlinking = true;
 		StartCoroutine("blink");
 	}
 

@@ -29,6 +29,8 @@ public class GameController : TimeManager {
 		float ydiff = newTier.transform.position.y - oldTier.transform.position.y;
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
 		player.transform.position += new Vector3 (0, ydiff, 0);
+		BaseTileMover bts = (BaseTileMover)player.GetComponent (typeof(BaseTileMover));
+		bts.isMoving = false;
 		GameObject[] ducklings = GameObject.FindGameObjectsWithTag("Duckling");
 		foreach (GameObject ducky in ducklings) {
 			DucklingScript dc = ducky.GetComponent<DucklingScript>();

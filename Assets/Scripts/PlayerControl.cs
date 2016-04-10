@@ -21,17 +21,11 @@ public class PlayerControl : BaseTileMover {
 	
 	void Update ()
 	{
-		// Up, Down, Left, Right = 0, 1, 2, 3 for this.movingDir
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
 		if (!this.isMoving) {
-			// I don't want it moving both directions at once, so just move horizontally if both are pressed.
-			if (moveHorizontal != 0) {
-				this.movingDir = (int)(2.5 + Mathf.Sign (moveHorizontal) * 0.5);
-				this.movingVec = new Vector3 (Mathf.Sign (moveHorizontal), 0, 0);
-			} else if (moveVertical != 0) {
-				this.movingDir = (int)(0.5 - Mathf.Sign (moveVertical) * 0.5);
-				this.movingVec = new Vector3 (0, 0, Mathf.Sign (moveVertical));
+			int dir = InputHandler.getInputDir ();
+			if (dir != -1){
+				this.movingDir = dir;
+				this.movingVec = new Vector3 (InputHandler.reduceXDir (this.movingDir), 0, InputHandler.reduceYDir (this.movingDir));
 			}
 		}
 
