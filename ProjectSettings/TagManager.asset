@@ -10,6 +10,7 @@ TagManager:
   - Sewer Grate
   - Tile
   - ObtainedDuckling
+  - LevelController
   layers:
   - Default
   - TransparentFX

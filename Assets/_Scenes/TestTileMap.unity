@@ -5605,8 +5605,8 @@ GameObject:
   - 4: {fileID: 931448742}
   - 114: {fileID: 931448741}
   m_Layer: 0
-  m_Name: GameController
-  m_TagString: GameController
+  m_Name: LevelController
+  m_TagString: LevelController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5619,11 +5619,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 931448740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 113215b4b7f2c4098b9f1ec44ee0e615, type: 3}
+  m_Script: {fileID: 11500000, guid: 88b7f9fc091894ed486fad8cfe598d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeCutoffs: 0500000008000000
-  cutoffBonuses: c800000032000000
+  timeCutoffs: 
+  cutoffBonuses: 
   timerText: {fileID: 1568479325}
   tiers:
   - {fileID: 392501676}

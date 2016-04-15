@@ -13,19 +13,23 @@ public class PlayerControl : BaseTileMover {
 	public int ducklingCount = 0;        // Tracker for # ducklings we've collected
 	public int totalDucklings;           // Total ducklings that can be found in this level.
 
+	private InputHandler ih;
+
 	public override void Start ()
     {
 		base.Start();
 		setMainText();
+		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
+		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
     }
 	
 	void Update ()
 	{
 		if (!this.isMoving) {
-			int dir = InputHandler.getInputDir ();
+			int dir = ih.getInputDir ();
 			if (dir != -1){
 				this.movingDir = dir;
-				this.movingVec = new Vector3 (InputHandler.reduceXDir (this.movingDir), 0, InputHandler.reduceYDir (this.movingDir));
+				this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
 			}
 		}
 

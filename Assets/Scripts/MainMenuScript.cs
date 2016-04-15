@@ -43,7 +43,6 @@ public class MainMenuScript : MonoBehaviour
 	private float theVolumeWas = 0.5f;
 	private GUIStyle volStyle;
 	
-	
 	void Start ()
 	{
 		volStyle = new GUIStyle();
@@ -116,28 +115,27 @@ public class MainMenuScript : MonoBehaviour
 			int tempInt = GUI.SelectionGrid (new Rect (.5f * Screen.width - 125, .4f * Screen.height, 250, .4f * Screen.height), levelGridInt, levelStrings, 5);
 			//This if statement is used to prevent us from running the remaining logic too often, especially in OnGUI.
 			if (tempInt != levelGridInt) {
-				Application.LoadLevel ("Parks_LevelOne");
-				/* if (GameControllerScript.Instance.getCurrentUnlockedLevel () <= tempInt) {
+				if (GameControllerScript.Instance.getCurrentUnlockedLevel () <= tempInt) {
 					text = "You haven't unlocked level " + (tempInt + 1).ToString () + " yet.";
 				} else {
 					switch (tempInt) {
 					case 0:
-						Application.LoadLevel ("Level1");
+						Application.LoadLevel (1);
 						break;
 					case 1:
-						Application.LoadLevel ("Level2");
+						Application.LoadLevel (2);
 						break;
 					case 2:
-						Application.LoadLevel ("Level3");
+						Application.LoadLevel (3);
 						break;
 					case 3:
-						Application.LoadLevel ("Level4");
+						Application.LoadLevel (4);
 						break;
 					case 4:
 						text = "No Level 5 Built Yet";
 						break;
 					}
-				}*/
+				}
 			}
 			levelGridInt = tempInt;
 		} else if (settingsMenu) {

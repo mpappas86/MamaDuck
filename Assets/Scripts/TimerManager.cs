@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class TimeManager : MonoBehaviour {
+public class TimerManager : MonoBehaviour {
 	
 	private float timer;            // Track how long the level has been going.
 	public int[] timeCutoffs;       // Times (in seconds) at which point we change the bonus we give for how long the level took

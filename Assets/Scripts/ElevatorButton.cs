@@ -5,11 +5,11 @@ public class ElevatorButton : MonoBehaviour {
 	
 	public bool up = true;  // Whether the button sends Mama up (true) or down (false)
 		
-	private GameController gc;  // Pointer to the GameController object.
+	private LevelController lc;  // Pointer to the GameController object.
 	private bool active = true; // Whether or not the button can be hit. 
 
 	void Start() {
-		gc = (GameController) GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
+		lc = (LevelController) GameObject.FindGameObjectWithTag ("LevelController").GetComponent<LevelController>();
 	}
 
 	// When we get hit, turn red and then tell the gameController to update the active tier.
@@ -17,7 +17,7 @@ public class ElevatorButton : MonoBehaviour {
 		if (other.gameObject.CompareTag("Player") && active) {
 			this.gameObject.GetComponent<Renderer>().material.color = Color.red;
 			this.active = false;
-			gc.TierChange(this.up);
+			lc.TierChange(this.up);
 		}
 	}
 

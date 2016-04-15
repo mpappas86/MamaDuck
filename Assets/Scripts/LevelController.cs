@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class GameController : TimeManager {
+public class LevelController : TimerManager {
 	
 	public GameObject[] tiers;      // List of all available tiers (top-level GameObjects containing the whole
 	                                // tier underneath) for the level.
