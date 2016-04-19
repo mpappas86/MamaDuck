@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d175bfe500ca460baabc819c1a8e450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseBackground: {fileID: 120006, guid: 2e8c576f10aec4fb48302969e4680139, type: 2}
 --- !u!1 &1857197446
 GameObject:
   m_ObjectHideFlags: 0

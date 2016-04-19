@@ -28,7 +28,7 @@ public class MainMenuScript : MonoBehaviour
 		"Level1",
 		"endCredits",
 	};
-	
+
 	//The guiText object will display information such as "There are no settings yet."
 	private string text = "";
 	public GUIStyle theGuiTextStyle;
@@ -59,7 +59,7 @@ public class MainMenuScript : MonoBehaviour
 		}
 		GetComponent<AudioSource>().Pause ();
 	}
-	
+
 	//Essentially unncessary. Might move more logic here eventually, since Update() is called less often than OnGUI() so logic
 	//should optimally be executed here as much as possible.
 	void Update ()

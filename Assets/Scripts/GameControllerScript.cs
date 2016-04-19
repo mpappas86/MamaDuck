@@ -9,6 +9,11 @@ public class GameControllerScript : MonoBehaviour
 
 	public static GameControllerScript Instance;
 
+	public GameObject pauseBackground;
+	private GameObject pauseBackInstance;
+	private bool paused = false;
+	private float prevTimeRate;
+
 	void Awake ()
 	{
 		if (Instance){
@@ -34,7 +39,20 @@ public class GameControllerScript : MonoBehaviour
 			currentLevel = 0;
 		}
 	}
+
+	void Pause(){
+		this.paused = true;
+		this.prevTimeRate = Time.timeScale;
+		Time.timeScale = 0;
+		pauseBackInstance = Instantiate (pauseBackground);
+	}
 	
+	void Unpause(){
+		this.paused = false;
+		Time.timeScale = this.prevTimeRate;
+		Destroy (pauseBackInstance);
+	}
+
 	//A series of getters and setters to modify the prefabs. 
 	//Setters for various ships and other gameObjects will be the upgrade methods called.
 	public void prefSetCurrentLevel(int L)
@@ -67,6 +85,24 @@ public class GameControllerScript : MonoBehaviour
 	public void levelWin(int levelWon){
 		if (levelWon >= currentUnlockedLevel) {
 			currentUnlockedLevel = levelWon + 1;
+		}
+	}
+
+	void OnGUI ()
+	{
+		if (Application.loadedLevel != 0) {
+			if (this.paused) {
+				if (GUI.Button (new Rect (.5f * Screen.width - 100, .8f * Screen.height, 200, .12f * Screen.height), "Unpause")) {
+					Unpause ();
+				}
+				if (GUI.Button (new Rect (.5f * Screen.width - 100, .6f * Screen.height, 200, .12f * Screen.height), "Return to Main Menu")) {
+					Application.LoadLevel(0);
+				}
+			} else {
+				if (GUI.Button (new Rect (.9f * Screen.width, .9f * Screen.height, .1f*Screen.width, .05f * Screen.height), "Pause")) {
+					Pause ();
+				}
+			}
 		}
 	}
 }
