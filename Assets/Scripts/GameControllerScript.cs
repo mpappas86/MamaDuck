@@ -84,7 +84,7 @@ public class GameControllerScript : MonoBehaviour
 	}
 	public void levelWin(int levelWon){
 		if (levelWon >= currentUnlockedLevel) {
-			currentUnlockedLevel = levelWon + 1;
+			prefSetCurrentUnlockedLevel(levelWon + 1);
 		}
 	}
 
