@@ -14,6 +14,10 @@ public class PlayerControl : BaseTileMover {
 	public int totalDucklings;           // Total ducklings that can be found in this level.
 
 	private InputHandler ih;
+	private GameControllerScript gcs;
+
+	private int wasMovingDir = -1;
+	private int momentumCountdown = 20;
 
 	public override void Start ()
     {
@@ -21,6 +25,7 @@ public class PlayerControl : BaseTileMover {
 		setMainText();
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
 		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
+		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript));
     }
 	
 	void Update ()
@@ -45,8 +50,21 @@ public class PlayerControl : BaseTileMover {
 
 	void FixedUpdate()
 	{
+		if (this.movingDir != -1) {
+			wasMovingDir = this.movingDir;
+		}
 		// Uses GetTileMove from the BaseTileMover class.
 		this.rb.MovePosition (this.GetTileMove ());
+		if (this.gcs.GetMovementHasMomentum ()) {
+			if (this.movingDir == -1 && this.wasMovingDir != -1) {
+				this.momentumCountdown -= 1;
+				if (this.momentumCountdown == 0){
+					this.movingDir = wasMovingDir;
+					this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
+					this.momentumCountdown = 20;
+				}
+			}
+		}
 	}
 
 	// Public method called by ducklings when mama reaches them so mama can update the score and text.
