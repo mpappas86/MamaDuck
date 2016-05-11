@@ -8,9 +8,7 @@ public class GameControllerScript : MonoBehaviour
 	private int currentLevel; //The level that is currently or most recently played.
 
 	public static GameControllerScript Instance;
-
-	public GameObject pauseBackground;
-	private GameObject pauseBackInstance;
+	
 	private bool paused = false;
 	private float prevTimeRate;
 
@@ -44,13 +42,11 @@ public class GameControllerScript : MonoBehaviour
 		this.paused = true;
 		this.prevTimeRate = Time.timeScale;
 		Time.timeScale = 0;
-		pauseBackInstance = Instantiate (pauseBackground);
 	}
 	
 	void Unpause(){
 		this.paused = false;
 		Time.timeScale = this.prevTimeRate;
-		Destroy (pauseBackInstance);
 	}
 
 	//A series of getters and setters to modify the prefabs. 
@@ -92,17 +88,22 @@ public class GameControllerScript : MonoBehaviour
 	{
 		if (Application.loadedLevel != 0) {
 			if (this.paused) {
-				if (GUI.Button (new Rect (.5f * Screen.width - 100, .8f * Screen.height, 200, .12f * Screen.height), "Unpause")) {
-					Unpause ();
-				}
-				if (GUI.Button (new Rect (.5f * Screen.width - 100, .6f * Screen.height, 200, .12f * Screen.height), "Return to Main Menu")) {
-					Application.LoadLevel(0);
-				}
+				GUI.Window(0, new Rect(.02f*Screen.width, .02f*Screen.height, .96f*Screen.width, .96f*Screen.height), TheMainMenu, "Pause");
+
 			} else {
 				if (GUI.Button (new Rect (.9f * Screen.width, .9f * Screen.height, .1f*Screen.width, .05f * Screen.height), "Pause")) {
 					Pause ();
 				}
 			}
+		}
+	}
+
+	void TheMainMenu(int idNum){
+		if (GUI.Button (new Rect (.5f * Screen.width - 100, .8f * Screen.height, 200, .12f * Screen.height), "Unpause")) {
+			Unpause ();
+		}
+		if (GUI.Button (new Rect (.5f * Screen.width - 100, .6f * Screen.height, 200, .12f * Screen.height), "Return to Main Menu")) {
+			Application.LoadLevel(0);
 		}
 	}
 }
