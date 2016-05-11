@@ -12,6 +12,8 @@ public class GameControllerScript : MonoBehaviour
 	private bool paused = false;
 	private float prevTimeRate;
 
+	private int movementHasMomentum;
+
 	void Awake ()
 	{
 		if (Instance){
@@ -36,6 +38,24 @@ public class GameControllerScript : MonoBehaviour
 		} else {
 			currentLevel = 0;
 		}
+		if(PlayerPrefs.HasKey("MovementHasMomentum")){
+			movementHasMomentum = PlayerPrefs.GetInt("MovementHasMomentum");
+		} else {
+			movementHasMomentum = 0;
+		}
+	}
+
+	public void SetMovementHasMomentum (bool val){
+		if (val) {
+			movementHasMomentum = 1;
+		} else {
+			movementHasMomentum = 0;
+		}
+		PlayerPrefs.SetInt ("MovementHasMomentum", movementHasMomentum);
+	}
+
+	public bool GetMovementHasMomentum(){
+		return movementHasMomentum == 1;
 	}
 
 	void Pause(){
