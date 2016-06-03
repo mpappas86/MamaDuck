@@ -112,7 +112,11 @@ public class GameControllerScript : MonoBehaviour
 
 			} else {
 				if (GUI.Button (new Rect (.9f * Screen.width, .9f * Screen.height, .1f*Screen.width, .05f * Screen.height), "Pause")) {
-					Pause ();
+					// Don't pause if the timescale is already 0 (i.e. we were viewing a different tier.)
+					// Allowing a pause would mean we don't know what time scale to return to.
+					if (Time.timeScale != 0){
+						Pause ();
+					}
 				}
 			}
 		}
