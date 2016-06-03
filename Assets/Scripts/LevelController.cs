@@ -8,9 +8,12 @@ public class LevelController : TimerManager {
 	public GameObject[] tiers;      // List of all available tiers (top-level GameObjects containing the whole
 	                                // tier underneath) for the level.
 	public int currentTier = 0;     // Starting tier for the level
+	public int liveTier = 0;        // Tier on which ducks are, in case we're just viewing other tiers, not moving.
 	
 	private bool levelOver = false; // Whether or not the level has ended.
 	private int finalScore = 0;     // Score the player accumulated, all things considered - to be tallied at level end.
+
+	private float prevTimeRate;     // For when we pause because we're looking at other tiers.
 
 	public override void Start () {
 		base.Start();
@@ -18,30 +21,54 @@ public class LevelController : TimerManager {
 		Time.timeScale = 1;
 	}
 
-	// Change the active tier.
-	public void TierChange(bool up){
+	// Change the active tier. This should probably be two methods - one for moving and one for viewing -
+	// once we get animations for tier changes. But for now it's cleaner code this way.
+	public void TierChange(bool up, bool moveDucks=true){
 		int up_down = up ? 1 : -1;
+		if (currentTier + up_down >= tiers.Length) {
+			up_down = -1 * currentTier;
+		}
 		GameObject newTier = tiers [currentTier + up_down];
 		GameObject oldTier = tiers [currentTier];
 
-		// Move the Player up/down a value equal to the y difference between the two tiers.
-		// Do the same for the ducklings if they're currently connected to Mama.
-		float ydiff = newTier.transform.position.y - oldTier.transform.position.y;
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		GameObject[] ducklings = GameObject.FindGameObjectsWithTag ("Duckling");
+		float ydiff = newTier.transform.position.y - oldTier.transform.position.y;
+		// Move the Player up/down a value equal to the y difference between the two tiers.
+		// Do this even if we're not really moving the ducks so the camera will move.
 		player.transform.position += new Vector3 (0, ydiff, 0);
-		BaseTileMover bts = (BaseTileMover)player.GetComponent (typeof(BaseTileMover));
-		bts.isMoving = false;
-		GameObject[] ducklings = GameObject.FindGameObjectsWithTag("Duckling");
-		foreach (GameObject ducky in ducklings) {
-			DucklingScript dc = ducky.GetComponent<DucklingScript>();
-			if (dc.contactWithMama){
-				dc.transform.position += new Vector3 (0, ydiff, 0);
+		
+		if (moveDucks) {
+			// Set the duck to be done moving so it will reevaluate where it can move to.
+			BaseTileMover bts = (BaseTileMover)player.GetComponent (typeof(BaseTileMover));
+			bts.isMoving = false;
+			// Move the ducklings if they're currently connected to Mama.
+			foreach (GameObject ducky in ducklings) {
+				DucklingScript dc = ducky.GetComponent<DucklingScript> ();
+				if (dc.contactWithMama) {
+					dc.transform.position += new Vector3 (0, ydiff, 0);
+				}
+			}
+			this.liveTier = this.liveTier + up_down;
+		} else {
+			bool active_setting;
+			if(currentTier + up_down == this.liveTier){
+				active_setting = true;
+				Time.timeScale = this.prevTimeRate;
+			} else {
+				active_setting = false;
+				this.prevTimeRate = Time.timeScale;
+				Time.timeScale = 0;
+			}
+			// player.SetActive (active_setting);
+			foreach(GameObject ducky in ducklings){
+				ducky.SetActive(active_setting);
 			}
 		}
 
 		newTier.SetActive (true);
 		oldTier.SetActive (false);
-		this.currentTier = currentTier + up_down;
+		this.currentTier = this.currentTier + up_down;
 		
 	}
 

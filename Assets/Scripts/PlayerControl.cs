@@ -46,6 +46,11 @@ public class PlayerControl : BaseTileMover {
 			this.wayPointTimer = 0.5f;
 		}
 
+		if (ih.isTrigger()) {
+			LevelController lc = (LevelController) GameObject.FindGameObjectWithTag ("LevelController").GetComponent<LevelController>();
+			lc.TierChange(true, false);
+		}
+
 	}
 
 	void FixedUpdate()
