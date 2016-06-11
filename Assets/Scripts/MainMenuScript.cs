@@ -142,25 +142,27 @@ public class MainMenuScript : MonoBehaviour
 			}
 			levelGridInt = tempInt;
 		} else if (settingsMenu) {
-			GUI.Label(new Rect(.1f * Screen.width, .2f * Screen.height, .8f*Screen.width, .08f * Screen.height), "Volume", volStyle);
-			theVolume = GUI.HorizontalSlider(new Rect(.1f * Screen.width, .3f * Screen.height, .8f*Screen.width, .2f * Screen.height), theVolume, 0.0F, 1.0F);
-			if (GUI.Button (new Rect (.1f * Screen.width, .5f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Sound Test")) {
+			GUI.Label(new Rect(.1f * Screen.width, .1f * Screen.height, .8f*Screen.width, .08f * Screen.height), "Volume", volStyle);
+			theVolume = GUI.HorizontalSlider(new Rect(.1f * Screen.width, .2f * Screen.height, .8f*Screen.width, .2f * Screen.height), theVolume, 0.0F, 1.0F);
+			if (GUI.Button (new Rect (.1f * Screen.width, .3f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Sound Test")) {
 				settingsMenu = false;
 				soundTest = true;
 			}
-// Commenting out this section right now.
-//			if (GUI.Button (new Rect (.1f * Screen.width, .65f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Credits")) {
-//				settingsMenu = false;
-//				text = "This game was made by Mark, Mike, Steven, and Terry. Find the best number.";
-//				//Fun fact - in the text above, if you count the letters, punctuation, and spaces as characters, there are exactly 74.
-//			}
 			bool movementSetting = gcScript.GetMovementHasMomentum();
 			string movementSettingString = "Disable Momentum Moving?";
 			if(!movementSetting){
 				movementSettingString = "Enable Momentum Moving?";
 			}
-			if (GUI.Button (new Rect (.1f * Screen.width, .65f * Screen.height, .8f*Screen.width, .12f * Screen.height), movementSettingString)) {
+			if (GUI.Button (new Rect (.1f * Screen.width, .5f * Screen.height, .8f*Screen.width, .12f * Screen.height), movementSettingString)) {
 				gcScript.SetMovementHasMomentum(!movementSetting);
+			}
+			bool vibrationSetting = gcScript.GetVibrations();
+			string vibrationSettingString = "Disable Vibrations?";
+			if(!vibrationSetting){
+				vibrationSettingString = "Enable Vibrations?";
+			}
+			if (GUI.Button (new Rect (.1f * Screen.width, .7f * Screen.height, .8f*Screen.width, .12f * Screen.height), vibrationSettingString)) {
+				gcScript.SetVibrations(!vibrationSetting);
 			}
 		} else if (soundTest) {
 			

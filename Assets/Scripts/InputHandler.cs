@@ -14,7 +14,7 @@ public class InputHandler: MonoBehaviour
 	private bool clickStarted = false;	//Has a click/touch just started?
 	private bool clickEnded = false;	//Has a click/touch just ended?
 	private bool clickMoved = false;	//Has a click/touch just moved while down?
-	private bool onTouchScreen = false;	//Are we on a touch-screen device?
+	public bool onTouchScreen = false;	//Are we on a touch-screen device?
 	private bool trigger = false; //Have we input the trigger command for special behavior?
 	
 

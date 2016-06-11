@@ -15,7 +15,7 @@ public class LevelController : TimerManager {
 
 	private float prevTimeRate;     // For when we pause because we're looking at other tiers.
 
-	private InputHandler ih;        // InputHandler to track non-player-related inputs
+	private InputHandler ih;          // InputHandler to track non-player-related inputs
 
 	private GameObject[] ducklings_ref; // Any ducklings.
 	private GameObject player_ref;      // The player. These two are used since sometimes the ducks go inactive.

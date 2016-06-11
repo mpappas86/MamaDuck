@@ -89,6 +89,7 @@ public class PlayerControl : BaseTileMover {
 			this.score += breadCountScore;
 			other.gameObject.SetActive (false);
 			setMainText ();
+			gcs.vibrate();
 		}
 	}
 

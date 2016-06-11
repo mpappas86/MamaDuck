@@ -13,6 +13,9 @@ public class GameControllerScript : MonoBehaviour
 	private float prevTimeRate;
 
 	private int movementHasMomentum;
+	private int vibrations;
+
+	private InputHandler ih;
 
 	void Awake ()
 	{
@@ -43,6 +46,12 @@ public class GameControllerScript : MonoBehaviour
 		} else {
 			movementHasMomentum = 0;
 		}
+		if(PlayerPrefs.HasKey("Vibrations")){
+			vibrations = PlayerPrefs.GetInt("Vibrations");
+		} else {
+			vibrations = 1;
+		}
+		ih = (InputHandler)gameObject.GetComponent(typeof(InputHandler));
 	}
 
 	public void SetMovementHasMomentum (bool val){
@@ -58,6 +67,29 @@ public class GameControllerScript : MonoBehaviour
 		return movementHasMomentum == 1;
 	}
 
+	public void SetVibrations (bool val){
+		if (val) {
+			vibrations = 1;
+		} else {
+			vibrations = 0;
+		}
+		PlayerPrefs.SetInt ("Vibrations", vibrations);
+	}
+	
+	public bool GetVibrations(){
+		return vibrations == 1;
+	}
+
+	public void vibrate(){
+		if(GetVibrations()){
+			if (ih.onTouchScreen) {
+				Handheld.Vibrate();
+			} else {
+				Debug.Log("Vibrate");
+			}
+		}
+	}
+	
 	void Pause(){
 		this.paused = true;
 		this.prevTimeRate = Time.timeScale;
