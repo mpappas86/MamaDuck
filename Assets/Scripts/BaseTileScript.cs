@@ -12,7 +12,8 @@ public class BaseTileScript : MonoBehaviour {
 	private Color initialColor;                           // Initial color of the tile.
 	private float blinkCadence = 0.5f;                    // Rate at which to blink if something changes.
 	private bool amBlinking = false;                      // Whether I'm goddamn blinking.
-
+	private bool activateBlinking = false;                // Start blinking when I get turned active?
+	
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
 		initialColor = myRenderer.material.color;
@@ -58,7 +59,18 @@ public class BaseTileScript : MonoBehaviour {
 	public void blinkUntilSteppedOn(float cadence=0.5f){
 		this.blinkCadence = cadence;
 		this.amBlinking = true;
-		StartCoroutine("blink");
+		if (this.gameObject.activeInHierarchy) {
+			StartCoroutine ("blink");
+		} else {
+			this.activateBlinking = true;
+		}
+	}
+
+	private void OnEnable(){
+		if (this.activateBlinking) {
+			this.activateBlinking = false;
+			StartCoroutine ("blink");
+		}
 	}
 
 	IEnumerator blink(){
