@@ -630,6 +630,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 487845626}
   - 114: {fileID: 487845625}
+  - 114: {fileID: 487845627}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: LevelController
@@ -651,9 +652,6 @@ MonoBehaviour:
   timeCutoffs: 
   cutoffBonuses: 
   timerText: {fileID: 121748209}
-  tiers:
-  - {fileID: 1454599268}
-  currentTier: 0
 --- !u!4 &487845626
 Transform:
   m_ObjectHideFlags: 0
@@ -666,6 +664,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &487845627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 487845624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932c6f06a7c4a45248bf495af1328af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiers:
+  - {fileID: 1454599268}
+  currentTier: 0
 --- !u!1001 &670311828
 Prefab:
   m_ObjectHideFlags: 0
@@ -1093,33 +1105,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 425360, guid: 438aaebeee66e4f15a90cb74b2c68353, type: 2}
   m_PrefabInternal: {fileID: 1110499891}
---- !u!1 &1209631859
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1209631860}
-  m_Layer: 0
-  m_Name: Tier1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1209631860
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1209631859}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
 --- !u!1001 &1365201039
 Prefab:
   m_ObjectHideFlags: 0

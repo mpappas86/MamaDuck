@@ -1697,6 +1697,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1351318315}
   - 114: {fileID: 1351318314}
+  - 114: {fileID: 1351318316}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: LevelController
@@ -1718,9 +1719,6 @@ MonoBehaviour:
   timeCutoffs: 
   cutoffBonuses: 
   timerText: {fileID: 856906545}
-  tiers:
-  - {fileID: 1940858143}
-  currentTier: 0
 --- !u!4 &1351318315
 Transform:
   m_ObjectHideFlags: 0
@@ -1733,6 +1731,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1351318316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1351318313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932c6f06a7c4a45248bf495af1328af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiers:
+  - {fileID: 1940858143}
+  currentTier: 0
 --- !u!4 &1351866673 stripped
 Transform:
   m_PrefabParentObject: {fileID: 425360, guid: 438aaebeee66e4f15a90cb74b2c68353, type: 2}
