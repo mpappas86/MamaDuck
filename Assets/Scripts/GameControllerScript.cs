@@ -8,9 +8,6 @@ public class GameControllerScript : MonoBehaviour
 	private int currentLevel; //The level that is currently or most recently played.
 
 	public static GameControllerScript Instance;
-	
-	private bool paused = false;
-	private float prevTimeRate;
 
 	private int movementHasMomentum;
 	private int vibrations;
@@ -89,17 +86,6 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 	}
-	
-	void Pause(){
-		this.paused = true;
-		this.prevTimeRate = Time.timeScale;
-		Time.timeScale = 0;
-	}
-	
-	void Unpause(){
-		this.paused = false;
-		Time.timeScale = this.prevTimeRate;
-	}
 
 	//A series of getters and setters to modify the prefabs. 
 	//Setters for various ships and other gameObjects will be the upgrade methods called.
@@ -133,33 +119,6 @@ public class GameControllerScript : MonoBehaviour
 	public void levelWin(int levelWon){
 		if (levelWon >= currentUnlockedLevel) {
 			prefSetCurrentUnlockedLevel(levelWon + 1);
-		}
-	}
-
-	void OnGUI ()
-	{
-		if (Application.loadedLevel != 0) {
-			if (this.paused) {
-				GUI.Window(0, new Rect(.02f*Screen.width, .02f*Screen.height, .96f*Screen.width, .96f*Screen.height), TheMainMenu, "Pause");
-
-			} else {
-				if (GUI.Button (new Rect (.9f * Screen.width, .9f * Screen.height, .1f*Screen.width, .05f * Screen.height), "Pause")) {
-					// Don't pause if the timescale is already 0 (i.e. we were viewing a different tier.)
-					// Allowing a pause would mean we don't know what time scale to return to.
-					if (Time.timeScale != 0){
-						Pause ();
-					}
-				}
-			}
-		}
-	}
-
-	void TheMainMenu(int idNum){
-		if (GUI.Button (new Rect (.5f * Screen.width - 100, .8f * Screen.height, 200, .12f * Screen.height), "Unpause")) {
-			Unpause ();
-		}
-		if (GUI.Button (new Rect (.5f * Screen.width - 100, .6f * Screen.height, 200, .12f * Screen.height), "Return to Main Menu")) {
-			Application.LoadLevel(0);
 		}
 	}
 }

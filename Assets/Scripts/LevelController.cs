@@ -11,6 +11,9 @@ public class LevelController : TimerManager {
 	private InputHandler ih;          // InputHandler to track non-player-related inputs
 	private TierController tc;        // TierController script.
 
+	private bool paused = false;      // Is the level paused?
+	private float prevTimeRate;       // If the level is paused, what's the time rate to revert to?
+
 	public override void Start () {
 		base.Start();
 		// The GameController manages physics-time, and can set it to 0 to pause the game.
@@ -45,6 +48,17 @@ public class LevelController : TimerManager {
 		return playerScript.getScore();
 	}
 
+	void Pause(){
+		this.paused = true;
+		this.prevTimeRate = Time.timeScale;
+		Time.timeScale = 0;
+	}
+	
+	void Unpause(){
+		this.paused = false;
+		Time.timeScale = this.prevTimeRate;
+	}
+
 	// Only used after the level is over - we put some text up telling you that you won, giving you your final score,
 	// and providing buttons with options of what to do next.
 	void OnGUI ()
@@ -64,6 +78,29 @@ public class LevelController : TimerManager {
 			if (GUI.Button (new Rect (.5f * Screen.width - 200, .55f * Screen.height, 400, .08f * Screen.height), "Replay?")) {
 				Application.LoadLevel (Application.loadedLevel);
 			}
+		}
+		if (Application.loadedLevel != 0) {
+			if (this.paused) {
+				GUI.Window(0, new Rect(.02f*Screen.width, .02f*Screen.height, .96f*Screen.width, .96f*Screen.height), ThePauseMenu, "Paused");
+				
+			} else {
+				if (GUI.Button (new Rect (.9f * Screen.width, .9f * Screen.height, .1f*Screen.width, .05f * Screen.height), "Pause")) {
+					// Don't pause if the timescale is already 0 (i.e. we were viewing a different tier.)
+					// Allowing a pause would mean we don't know what time scale to return to.
+					if (Time.timeScale != 0){
+						Pause ();
+					}
+				}
+			}
+		}
+	}
+	
+	void ThePauseMenu(int idNum){
+		if (GUI.Button (new Rect (.5f * Screen.width - 100, .8f * Screen.height, 200, .12f * Screen.height), "Unpause")) {
+			Unpause ();
+		}
+		if (GUI.Button (new Rect (.5f * Screen.width - 100, .6f * Screen.height, 200, .12f * Screen.height), "Return to Main Menu")) {
+			Application.LoadLevel(0);
 		}
 	}
 }
