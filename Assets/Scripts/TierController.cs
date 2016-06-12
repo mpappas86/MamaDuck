@@ -14,16 +14,19 @@ public class TierController : MonoBehaviour {
 
 	private GameObject[] ducklings_ref; // Any ducklings.
 	private GameObject player_ref;      // The player. These two are used since sometimes the ducks go inactive.
-	
+
 	private delegate void ExampleTierSwapper(bool up, float ydiff, int up_down);
 
-	public bool onLiveTier(){
-		return liveTier == currentTier;
-	}
+	private CameraController cc;
 
 	public void Start () {
 		player_ref = GameObject.FindGameObjectWithTag ("Player");
 		ducklings_ref = GameObject.FindGameObjectsWithTag ("Duckling");
+		cc = (CameraController)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent (typeof(CameraController));
+	}
+
+	public bool onLiveTier(){
+		return liveTier == currentTier;
 	}
 	
 	public void moveTier(bool up){
@@ -76,8 +79,11 @@ public class TierController : MonoBehaviour {
 		if(currentTier + up_down == this.liveTier){
 			active_setting = true;
 			Time.timeScale = this.prevTimeRate;
+			cc.UnFreeze();
 		} else {
 			active_setting = false;
+			cc.SetPositionImmediatelyXZ(tiers[currentTier].transform.position);
+			cc.Freeze();
 			this.prevTimeRate = Time.timeScale;
 			Time.timeScale = 0;
 		}
