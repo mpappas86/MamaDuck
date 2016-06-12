@@ -23,7 +23,7 @@ public class TimerManager : MonoBehaviour {
 	}
 	
 	// Every frame update the timer.
-	void Update () {
+	public virtual void Update () {
 		if (runTimer) {
 			timer += Time.deltaTime;
 			setTimerText();

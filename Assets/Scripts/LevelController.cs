@@ -12,18 +12,16 @@ public class LevelController : TimerManager {
 	private TierController tc;        // TierController script.
 
 	private bool paused = false;      // Is the level paused?
-	private float prevTimeRate;       // If the level is paused, what's the time rate to revert to?
 
 	public override void Start () {
 		base.Start();
-		// The GameController manages physics-time, and can set it to 0 to pause the game.
-		Time.timeScale = 1;
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
 		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
 		tc = (TierController)this.gameObject.GetComponent (typeof(TierController));
 	}
 	
-	void Update (){
+	public override void Update (){
+		base.Update ();
 		// Only do a tier view when timeScale is 0 if it got that way from a tier change.
 		// This means no tier changes when the game is paused.
 		if (ih.isTrigger()){
@@ -49,14 +47,15 @@ public class LevelController : TimerManager {
 	}
 
 	void Pause(){
+		this.activeTimer (false);
 		this.paused = true;
-		this.prevTimeRate = Time.timeScale;
-		Time.timeScale = 0;
+		ih.Freeze ();
 	}
 	
 	void Unpause(){
+		this.activeTimer (true);
 		this.paused = false;
-		Time.timeScale = this.prevTimeRate;
+		ih.UnFreeze ();
 	}
 
 	// Only used after the level is over - we put some text up telling you that you won, giving you your final score,

@@ -506,7 +506,6 @@ MonoBehaviour:
   - {fileID: 1454599268}
   - {fileID: 1209631859}
   currentTier: 0
-  liveTier: 0
 --- !u!1001 &640348513
 Prefab:
   m_ObjectHideFlags: 0
@@ -1238,6 +1237,10 @@ Prefab:
     - target: {fileID: 22486402, guid: 9fb26d8535931435fab6139fc8d99996, type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453496, guid: 9fb26d8535931435fab6139fc8d99996, type: 2}
+      propertyPath: m_Text
+      value: Timer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fb26d8535931435fab6139fc8d99996, type: 2}

@@ -17,6 +17,7 @@ public class InputHandler: MonoBehaviour
 	public bool onTouchScreen = false;	//Are we on a touch-screen device?
 	private bool trigger = false; //Have we input the trigger command for special behavior?
 	
+	private bool frozen = false; // Should we ignore all user input for now?
 
 	void Awake ()
 	{
@@ -30,69 +31,84 @@ public class InputHandler: MonoBehaviour
 		}
 	}
 
+	public void Freeze(){
+		// Drop all input signals immediately.
+		clickDown = clickEnded = clickUp = clickStarted = clickMoved = movingClick = trigger = false;
+		frozen = true;
+	}
+
+	public void UnFreeze(){
+		frozen = false;
+	}
+
 	void Update ()
 	{
-		if (!onTouchScreen) {
-			//If we thought the mouse was up but now it is down, it was just clicked down. So a click started.
-			if (clickUp && Input.GetMouseButton (0)) {
-				clickEnded = false;
-				clickDown = true;
-				clickUp = false;	
-				clickStarted = true;
-				initialMousePos = Input.mousePosition;
-				//If we thought the mouse was just clicked down and it is still down in the next frame, it is moving.
-			} else if (clickDown && Input.GetMouseButton (0)) {
-				clickMoved = true;
-				clickDown = false;
-				movingClick = true;
-				movingMousePos = Input.mousePosition;
-				//If the mouse is moving and still down, it is still moving, so update the position and note the change in position.
-			} else if (movingClick && Input.GetMouseButton (0)) {
-				clickMoved = true;
-				deltaMovingMousePos = (Vector2)Input.mousePosition - movingMousePos;
-				movingMousePos = Input.mousePosition;
-				//If the mouse was moving but is now up, the drag has ended.
-			} else if (movingClick && !Input.GetMouseButton (0)) {
-				movingClick = false;
-				clickUp = true;
-				clickEnded = true;
-				finalMousePos = Input.mousePosition;;
-				//If the mouse was down but is now up, the click has ended.
-			} else if (clickDown && !Input.GetMouseButton (0)) {
-				clickDown = false;
-				clickUp = true;
-				clickEnded = true;
-				finalMousePos = initialMousePos;
-			}
-			
-			if(Input.GetKeyDown("space")){
-				trigger = true;
-			}
+		if (frozen) {
+			return;
 		} else {
-			//If a touch began, mark it down.
-			if (Input.GetTouch (0).phase == TouchPhase.Began) {	
-				clickEnded = false;
-				clickStarted = true;
-				clickDown = true;
-				initialMousePos = Input.GetTouch (0).position;
-				//If a swipe began, mark it down.
-			} else if (clickDown && Input.GetTouch (0).phase == TouchPhase.Moved) {
-				clickMoved = true;
-				clickDown = false;
-				movingMousePos = Input.GetTouch (0).position;
-				//If a swipe continued, update the position info.
-			} else if (!clickDown && Input.GetTouch (0).phase == TouchPhase.Moved) {
-				clickMoved = true;
-				deltaMovingMousePos = (Vector2)Input.GetTouch (0).position - movingMousePos;
-				movingMousePos = Input.GetTouch (0).position;
-				//If a touch ended, mark it down.
-			} else if (Input.GetTouch (0).phase == TouchPhase.Ended) {
-				finalMousePos = Input.GetTouch (0).position;
-				clickEnded = true;
-			}
-			
-			if(Input.acceleration.sqrMagnitude > 5){
-				trigger = true;
+			if (!onTouchScreen) {
+				//If we thought the mouse was up but now it is down, it was just clicked down. So a click started.
+				if (clickUp && Input.GetMouseButton (0)) {
+					clickEnded = false;
+					clickDown = true;
+					clickUp = false;	
+					clickStarted = true;
+					initialMousePos = Input.mousePosition;
+					//If we thought the mouse was just clicked down and it is still down in the next frame, it is moving.
+				} else if (clickDown && Input.GetMouseButton (0)) {
+					clickMoved = true;
+					clickDown = false;
+					movingClick = true;
+					movingMousePos = Input.mousePosition;
+					//If the mouse is moving and still down, it is still moving, so update the position and note the change in position.
+				} else if (movingClick && Input.GetMouseButton (0)) {
+					clickMoved = true;
+					deltaMovingMousePos = (Vector2)Input.mousePosition - movingMousePos;
+					movingMousePos = Input.mousePosition;
+					//If the mouse was moving but is now up, the drag has ended.
+				} else if (movingClick && !Input.GetMouseButton (0)) {
+					movingClick = false;
+					clickUp = true;
+					clickEnded = true;
+					finalMousePos = Input.mousePosition;
+					;
+					//If the mouse was down but is now up, the click has ended.
+				} else if (clickDown && !Input.GetMouseButton (0)) {
+					clickDown = false;
+					clickUp = true;
+					clickEnded = true;
+					finalMousePos = initialMousePos;
+				}
+				
+				if (Input.GetKeyDown ("space")) {
+					trigger = true;
+				}
+			} else {
+				//If a touch began, mark it down.
+				if (Input.GetTouch (0).phase == TouchPhase.Began) {	
+					clickEnded = false;
+					clickStarted = true;
+					clickDown = true;
+					initialMousePos = Input.GetTouch (0).position;
+					//If a swipe began, mark it down.
+				} else if (clickDown && Input.GetTouch (0).phase == TouchPhase.Moved) {
+					clickMoved = true;
+					clickDown = false;
+					movingMousePos = Input.GetTouch (0).position;
+					//If a swipe continued, update the position info.
+				} else if (!clickDown && Input.GetTouch (0).phase == TouchPhase.Moved) {
+					clickMoved = true;
+					deltaMovingMousePos = (Vector2)Input.GetTouch (0).position - movingMousePos;
+					movingMousePos = Input.GetTouch (0).position;
+					//If a touch ended, mark it down.
+				} else if (Input.GetTouch (0).phase == TouchPhase.Ended) {
+					finalMousePos = Input.GetTouch (0).position;
+					clickEnded = true;
+				}
+				
+				if (Input.acceleration.sqrMagnitude > 5) {
+					trigger = true;
+				}
 			}
 		}
 	}
@@ -159,6 +175,9 @@ public class InputHandler: MonoBehaviour
 
 	// Down, Up, Left, Right = 0, 1, 2, 3 for dir
 	public int getInputDir(){
+		if (frozen) {
+			return -1;
+		}
 		float[] vals = getHorizVertMov ();
 		float moveHorizontal = vals [0];
 		float moveVertical = vals [1];

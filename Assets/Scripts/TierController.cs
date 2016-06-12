@@ -78,14 +78,11 @@ public class TierController : MonoBehaviour {
 		bool active_setting;
 		if(currentTier + up_down == this.liveTier){
 			active_setting = true;
-			Time.timeScale = this.prevTimeRate;
 			cc.UnFreeze();
 		} else {
 			active_setting = false;
 			cc.SetPositionImmediatelyXZ(tiers[currentTier].transform.position);
 			cc.Freeze();
-			this.prevTimeRate = Time.timeScale;
-			Time.timeScale = 0;
 		}
 		player_ref.SetActive(active_setting);
 		foreach(GameObject ducky in ducklings_ref){
