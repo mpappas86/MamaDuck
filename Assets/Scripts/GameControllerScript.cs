@@ -17,7 +17,7 @@ public class GameControllerScript : MonoBehaviour
 	void Awake ()
 	{
 		if (Instance){
-			DestroyImmediate(gameObject);
+			Destroy(gameObject);
 		} else {
 			DontDestroyOnLoad(gameObject);
 			Instance = this;
