@@ -19,11 +19,6 @@ public class InputHandler: MonoBehaviour
 	
 	private bool frozen = false; // Should we ignore all user input for now?
 
-	void Awake ()
-	{
-		DontDestroyOnLoad (transform.gameObject);
-	}
-
 	public void Start ()
 	{
 		if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {

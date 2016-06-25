@@ -10,13 +10,18 @@ public class LevelController : TimerManager {
 	
 	private InputHandler ih;          // InputHandler to track non-player-related inputs
 	private TierController tc;        // TierController script.
+	private GameControllerScript gcs; // GameControllerScript reference
 
 	private bool paused = false;      // Is the level paused?
+
+	private string nextLevelString = "NextLevel?"; // The text on the next level button. Changes if can't access next level for some reason.
 
 	public override void Start () {
 		base.Start();
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
 		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
+		ih.UnFreeze ();
+		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript)); 
 		tc = (TierController)this.gameObject.GetComponent (typeof(TierController));
 	}
 	
@@ -36,7 +41,7 @@ public class LevelController : TimerManager {
 		this.activeTimer(false);
 		this.levelOver = true;
 		this.finalScore = this.getTimeBonus () + this.getPlayerScore ();
-		Time.timeScale = 0;
+		ih.Freeze ();
 	}
 
 	// Retrieve the total points the player accumulated, separate from any time or completion bonus.
@@ -71,10 +76,17 @@ public class LevelController : TimerManager {
 			GUI.Box (new Rect (.5f * Screen.width - 200, .1f * Screen.height, 400, .18f * Screen.height), winText, winStyle);
 			
 			
-			if (GUI.Button (new Rect (.5f * Screen.width - 200, .75f * Screen.height, 400, .08f * Screen.height), "Return to Menu?")) {
-				Application.LoadLevel ("MainMenu");
+			if (GUI.Button (new Rect (.5f * Screen.width - 200, .35f * Screen.height, 400, .08f * Screen.height), nextLevelString)) {
+				if(gcs.getCurrentUnlockedLevel() > Application.loadedLevel){
+					Application.LoadLevel (Application.loadedLevel+1);
+				} else {
+					nextLevelString = "Not Unlocked Yet";
+				}
 			}
-			if (GUI.Button (new Rect (.5f * Screen.width - 200, .55f * Screen.height, 400, .08f * Screen.height), "Replay?")) {
+			if (GUI.Button (new Rect (.5f * Screen.width - 200, .55f * Screen.height, 400, .08f * Screen.height), "Return to Menu?")) {
+				Application.LoadLevel (0);
+			}
+			if (GUI.Button (new Rect (.5f * Screen.width - 200, .75f * Screen.height, 400, .08f * Screen.height), "Replay?")) {
 				Application.LoadLevel (Application.loadedLevel);
 			}
 		}
