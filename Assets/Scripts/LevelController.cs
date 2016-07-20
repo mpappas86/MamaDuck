@@ -23,11 +23,6 @@ public class LevelController : TimerManager {
 		ih.UnFreeze ();
 		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript)); 
 		tc = (TierController)this.gameObject.GetComponent (typeof(TierController));
-
-        //mark code
-        // single audio source
-        // load sound effects with resources.load before playing
-        gc.AddComponent<AudioSource>();
     }
 	
 	public override void Update (){
