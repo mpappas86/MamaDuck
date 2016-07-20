@@ -11,7 +11,7 @@ public class SfxHandler : MonoBehaviour {
     {
         if (Instance)
         {
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
         }
         else {
             DontDestroyOnLoad(gameObject);
