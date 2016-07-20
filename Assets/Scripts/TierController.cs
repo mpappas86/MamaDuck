@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -51,6 +51,12 @@ public class TierController : MonoBehaviour {
 	
 	private void changeTier(bool up, ExampleTierSwapper theTierSwapper){
 		int up_down = up ? 1 : -1;
+		
+		// markcode
+		int tier_noise = up ? 1 : 2;
+        SfxHandler sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+        sfxScript.playAudio(tier_noise);
+
 		if (currentTier + up_down >= tiers.Length) {
 			up_down = -1 * currentTier;
 		}

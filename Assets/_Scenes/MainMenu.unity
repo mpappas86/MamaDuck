@@ -542,6 +542,7 @@ GameObject:
   - 4: {fileID: 423528166}
   - 114: {fileID: 423528165}
   - 114: {fileID: 423528167}
+  - 114: {fileID: 423528168}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -712,6 +713,18 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27aa906442e6a47ad91d92906c6d13e4, type: 3}
   m_IsPrefabParent: 0
+--- !u!114 &423528168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 423528164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157a598a454ab394eb172eeae4a9110a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipHolder: []
 --- !u!1 &1857197446
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -23,7 +23,12 @@ public class LevelController : TimerManager {
 		ih.UnFreeze ();
 		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript)); 
 		tc = (TierController)this.gameObject.GetComponent (typeof(TierController));
-	}
+
+        //mark code
+        // single audio source
+        // load sound effects with resources.load before playing
+        gc.AddComponent<AudioSource>();
+    }
 	
 	public override void Update (){
 		base.Update ();
@@ -55,6 +60,10 @@ public class LevelController : TimerManager {
 		this.activeTimer (false);
 		this.paused = true;
 		ih.Freeze ();
+
+		// markcode
+		SfxHandler sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+        sfxScript.playAudio(0);
 	}
 	
 	void Unpause(){
