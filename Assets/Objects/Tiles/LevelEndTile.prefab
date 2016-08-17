@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2332848}
   - 65: {fileID: 6549788}
   - 114: {fileID: 11475814}
-  - 114: {fileID: 11472624}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -207,18 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amPassable: 01010101
---- !u!114 &11472624
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amStartingTile: 0
 --- !u!114 &11475814
 MonoBehaviour:
   m_ObjectHideFlags: 1

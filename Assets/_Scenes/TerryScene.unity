@@ -939,6 +939,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2597dbbca5f1d4dcabaa662d2bfa6c89, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &677288160 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 148314, guid: 2597dbbca5f1d4dcabaa662d2bfa6c89, type: 2}
+  m_PrefabInternal: {fileID: 677288159}
 --- !u!1001 &682506191
 Prefab:
   m_ObjectHideFlags: 0
@@ -1539,6 +1543,10 @@ Prefab:
       propertyPath: m_Name
       value: BaseTile (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 11436956, guid: 5744c6ebeb94341b6b9431172014d25c, type: 2}
+      propertyPath: amStartingTileFor
+      value: 
+      objectReference: {fileID: 677288160}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5744c6ebeb94341b6b9431172014d25c, type: 2}
   m_IsPrefabParent: 0

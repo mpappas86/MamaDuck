@@ -3,15 +3,15 @@ using System.Collections;
 
 public class TileTrigger : MonoBehaviour {
 
-	public bool amStartingTile = false;  // Designates whether or not this tile is the tile Mama starts on.
+	public GameObject amStartingTileFor = null;  // Designates whether or not this tile is the tile Mama starts on.
 	private BaseTileScript bts;          // Pointer to this Tile's BaseTileScript for access to public methods.
 
 	void Start(){
 		bts = (BaseTileScript) this.gameObject.GetComponentInParent (typeof(BaseTileScript));
 		// If this is the starting tile, then on startup of the game, we need to tell Mama what her valid moves are.
 		// We do this by effectivelly "triggering" as if Mama had just walked onto us.
-		if (amStartingTile) {
-			OnTriggerEnter(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>());
+		if (amStartingTileFor != null) {
+			OnTriggerEnter(amStartingTileFor.GetComponent<Collider>());
 		}
 	}
 

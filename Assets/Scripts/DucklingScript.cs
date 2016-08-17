@@ -9,7 +9,7 @@ public class DucklingScript : BaseTileMover {
 	private Vector3 wanderDir;          // Current wander direction
 	public int numFramesToWander;       // Total number of frames to wander a given direction before changing.
 	private int numFramesLeft;          // Frame counter for wandering
-	public bool contactWithMama;        // Whether or not we have been collected by Mama yet.
+	public bool contactWithMama = false;// Whether or not we have been collected by Mama yet.
 	public float containerRadius;       // Float describing a circle around the duckling's starting position. Ducklings won't
 	                                    // wander outside this until Mama finds them.
 	private Vector3 initialLocation;    // Duckling's initial location, to be used for the container radius logic.
@@ -23,13 +23,12 @@ public class DucklingScript : BaseTileMover {
 		this.mamaWayPoint = GameObject.Find ("wayPoint");
 		this.wanderDir = GetWanderDir();
 		this.numFramesLeft = numFramesToWander;
-		this.contactWithMama = false;
 		this.initialLocation = this.gameObject.transform.position;
 		this.mamaScript = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerControl> ();
 
         //markcode: set the sfxScript varialbe to the SfxHandler script attached to the game controller
         this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
-    }
+	}
 
 	void OnTriggerEnter( Collider other){
 		if (other.gameObject.CompareTag("Sewer Grate")) {
@@ -74,8 +73,8 @@ public class DucklingScript : BaseTileMover {
 			}
 		}
 		// Add on the random movement on top of the tile movement.
-		Vector3 randomMovement = DucklingRandomMovement();
-		this.rb.MovePosition (moveTo + randomMovement);
+		// Vector3 randomMovement = DucklingRandomMovement();
+		this.rb.MovePosition (moveTo); //+ randomMovement);
 	}
 
 	void SetupMoveViaWaypoint() {
