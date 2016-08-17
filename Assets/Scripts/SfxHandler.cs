@@ -23,10 +23,14 @@ public class SfxHandler : MonoBehaviour {
         // load sound effects with resources.load once in Awake
         gameObject.AddComponent<AudioSource>();
 
-        clipHolder = new AudioClip[3];
+        clipHolder = new AudioClip[7];
         clipHolder[0] = Resources.Load("SoundFX/pause") as AudioClip;
         clipHolder[1] = Resources.Load("SoundFX/ascending_tier") as AudioClip;
         clipHolder[2] = Resources.Load("SoundFX/descending_tier") as AudioClip;
+        clipHolder[3] = Resources.Load("SoundFX/duckling_pickup") as AudioClip;
+        clipHolder[4] = Resources.Load("SoundFX/duckling_death") as AudioClip;
+        clipHolder[5] = Resources.Load("SoundFX/duck_zapped") as AudioClip;
+        clipHolder[6] = Resources.Load("SoundFX/level_completed") as AudioClip;
     }
 
     // Use this for initialization

@@ -16,6 +16,8 @@ public class LevelController : TimerManager {
 
 	private string nextLevelString = "NextLevel?"; // The text on the next level button. Changes if can't access next level for some reason.
 
+    private SfxHandler sfxScript;     // markcode
+
 	public override void Start () {
 		base.Start();
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
@@ -23,6 +25,9 @@ public class LevelController : TimerManager {
 		ih.UnFreeze ();
 		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript)); 
 		tc = (TierController)this.gameObject.GetComponent (typeof(TierController));
+
+        // markcode: set the sfxScript varialbe to the SfxHandler script attached to the game controller
+        this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
     }
 	
 	public override void Update (){
@@ -41,6 +46,10 @@ public class LevelController : TimerManager {
 		this.activeTimer(false);
 		this.levelOver = true;
 		this.finalScore = this.getTimeBonus () + this.getPlayerScore ();
+
+        // markcode: play the level_completed audio which happens to be number 6
+        sfxScript.playAudio(6);
+
 		ih.Freeze ();
 	}
 
@@ -56,8 +65,7 @@ public class LevelController : TimerManager {
 		this.paused = true;
 		ih.Freeze ();
 
-		// markcode
-		SfxHandler sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+		// markcode: play the pause audio which happens to be number 0
         sfxScript.playAudio(0);
 	}
 	

@@ -15,7 +15,7 @@ public class DucklingScript : BaseTileMover {
 	private Vector3 initialLocation;    // Duckling's initial location, to be used for the container radius logic.
 	private bool shouldFallAndDie = false;  // Indicator of whether we have run into a sewer grate and are currently dying.
 	private PlayerControl mamaScript;   // Pointer to the Mama's PlayerControl script so we can access public methods.
-
+    private SfxHandler sfxScript;       //mark code
 
 	public override void Start ()
 	{
@@ -26,7 +26,10 @@ public class DucklingScript : BaseTileMover {
 		this.contactWithMama = false;
 		this.initialLocation = this.gameObject.transform.position;
 		this.mamaScript = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerControl> ();
-	}
+
+        //markcode: set the sfxScript varialbe to the SfxHandler script attached to the game controller
+        this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+    }
 
 	void OnTriggerEnter( Collider other){
 		if (other.gameObject.CompareTag("Sewer Grate")) {
@@ -35,13 +38,20 @@ public class DucklingScript : BaseTileMover {
 			// like the mama knocking the duckling out of the way at the last second, causing weirdness.
 			this.rb.constraints = RigidbodyConstraints.FreezeAll;
 			this.shouldFallAndDie = true;
-		} else if (contactWithMama) {
+
+            // markcode: play the duckling_death audio which happens to be number 4
+            sfxScript.playAudio(4);
+
+        } else if (contactWithMama) {
 			return;
 		// If we make contanct with Mama, make sure we note that it happened and alert Mama that she found us.
 		} else if (other.gameObject.CompareTag("Player")) {
 			contactWithMama = true;
 			mamaScript.ObtainDuckling();
-		}
+
+            // markcode: play the duckling_pickup audio which happens to be number 3
+            sfxScript.playAudio(3);
+        }
 	}
 	
 	void Update() {

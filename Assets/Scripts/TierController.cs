@@ -19,11 +19,16 @@ public class TierController : MonoBehaviour {
 
 	private CameraController cc;
 
+    private SfxHandler sfxScript;       // markcode
+
 	public void Start () {
 		player_ref = GameObject.FindGameObjectWithTag ("Player");
 		ducklings_ref = GameObject.FindGameObjectsWithTag ("Duckling");
 		cc = (CameraController)GameObject.FindGameObjectWithTag ("MainCamera").GetComponent (typeof(CameraController));
-	}
+
+        // markcode: set the sfxScript varialbe to the SfxHandler script attached to the game controller
+        this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+    }
 
 	public bool onLiveTier(){
 		return liveTier == currentTier;
@@ -52,9 +57,8 @@ public class TierController : MonoBehaviour {
 	private void changeTier(bool up, ExampleTierSwapper theTierSwapper){
 		int up_down = up ? 1 : -1;
 		
-		// markcode
+		// markcode: play either the ascending_tier or the descending_tier audio, which happens to be number 1 or 2
 		int tier_noise = up ? 1 : 2;
-        SfxHandler sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
         sfxScript.playAudio(tier_noise);
 
 		if (currentTier + up_down >= tiers.Length) {
