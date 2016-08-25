@@ -21,6 +21,8 @@ public class TileTrigger : MonoBehaviour {
 			setValidMoves(other, bts.getValidMoves());
 		} else if (other.CompareTag("Duckling")) {
 			setValidMoves(other, bts.getValidMoves());
+			BaseTileMover btm = (BaseTileMover) other.GetComponent(typeof(BaseTileMover));
+			btm.isMoving = false;
 		}
 	}
 

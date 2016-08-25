@@ -12,7 +12,7 @@ public class BaseTileMover : MonoBehaviour {
 
 	private float movedDistance = 0;
 	public bool isMoving;
-	private bool[] valid_moves;
+	public bool[] valid_moves;
 	
 	// Up, Down, Left, Right = 0, 1, 2, 3
 	

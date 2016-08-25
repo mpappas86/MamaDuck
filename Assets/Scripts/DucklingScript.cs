@@ -28,6 +28,8 @@ public class DucklingScript : BaseTileMover {
 
         //markcode: set the sfxScript varialbe to the SfxHandler script attached to the game controller
         this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z);
+		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 10, this.transform.position.z);
 	}
 
 	void OnTriggerEnter( Collider other){
