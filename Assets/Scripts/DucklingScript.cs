@@ -28,8 +28,6 @@ public class DucklingScript : BaseTileMover {
 
         //markcode: set the sfxScript varialbe to the SfxHandler script attached to the game controller
         this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
-		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z);
-		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 10, this.transform.position.z);
 	}
 
 	void OnTriggerEnter( Collider other){
@@ -49,7 +47,7 @@ public class DucklingScript : BaseTileMover {
 		} else if (other.gameObject.CompareTag("Player")) {
 			contactWithMama = true;
 			mamaScript.ObtainDuckling();
-
+			this.valid_moves = mamaScript.valid_moves;
             // markcode: play the duckling_pickup audio which happens to be number 3
             sfxScript.playAudio(3);
         }

@@ -2215,7 +2215,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11445532, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
       propertyPath: contactWithMama
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7db22cfcf238d4538b64c130fd6f4ed1, type: 2}
