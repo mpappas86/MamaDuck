@@ -83,6 +83,7 @@ public class PlayerControl : BaseTileMover {
 
 	// We only handle collisions with items - ducklings, buttons, etc handle their special behavior when we hit them.
 	// TODO: Move this to GameController as well?
+    // Adding EndLevel logic !
 	void OnTriggerEnter(Collider other) 
 	{
 		if (other.gameObject.CompareTag ("Breadcrumb")) {
@@ -90,7 +91,9 @@ public class PlayerControl : BaseTileMover {
 			other.gameObject.SetActive (false);
 			setMainText ();
 			gcs.vibrate();
-		}
+          //  gcScript.levelWin(Application.loadedLevel);
+          //  lcScript.endLevel();
+        }
 	}
 
 	// Text setter based on how many ducklings we've collected.
