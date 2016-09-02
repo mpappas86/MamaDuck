@@ -106,7 +106,7 @@ public class PlayerControl : BaseTileMover {
 
 	// Set the text that explains our duckling count and score.
 	public void setMainText(){
-		this.mainText.text = DucklingText() + "\nScore: " + this.score.ToString ();
+		this.mainText.text = DucklingText() + "\nScore: " + this.getScore().ToString ();
 	}
 
 	// Score/text updater in the case that a duckling gets murdered.
@@ -116,7 +116,7 @@ public class PlayerControl : BaseTileMover {
 	}
 
 	public int getScore(){
-		return this.score;
+		return this.score + 500 * this.ducklingCount;
 	}
 	
 
