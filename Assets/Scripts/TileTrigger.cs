@@ -18,17 +18,14 @@ public class TileTrigger : MonoBehaviour {
 	// If a BaseTileMover steps onto us, we set their valid moves.
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag("Player")) {
-			setValidMoves(other, bts.getValidMoves());
-		} else if (other.CompareTag("Duckling")) {
-			setValidMoves(other, bts.getValidMoves());
-			BaseTileMover btm = (BaseTileMover) other.GetComponent(typeof(BaseTileMover));
-			btm.isMoving = false;
+			setCurrentStatus(other, bts.getValidMoves(), bts.currentTileQuality());
 		}
 	}
 
-	void setValidMoves(Collider obj, bool[] valid_moves){
+	void setCurrentStatus(Collider obj, bool[] valid_moves, string tileQuality){
 		BaseTileMover btm = (BaseTileMover) obj.GetComponent(typeof(BaseTileMover));
 		btm.setValidMoves(valid_moves);
+		btm.setTileQuality (tileQuality);
 	}
 
 }

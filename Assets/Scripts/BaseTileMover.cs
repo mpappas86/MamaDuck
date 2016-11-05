@@ -12,10 +12,10 @@ public class BaseTileMover : MonoBehaviour {
 
 	private float movedDistance = 0;
 	public bool isMoving;
-	public bool[] valid_moves;
-	public bool momentumMoving = false;
-
 	private int wasMovingDir = -1;
+	public bool[] valid_moves;
+
+	public bool momentumMoving = false;
 	private int momentumCountdown = 20;
 	private InputHandler ih;
 	
@@ -63,6 +63,14 @@ public class BaseTileMover : MonoBehaviour {
 	// Public setter for TileTrigger - TileTrigger calls this to inform us where we can go each time we step onto a new tile. 
 	public void setValidMoves(bool[] new_valid_moves){
 		this.valid_moves = new_valid_moves;
+	}
+
+	public void setTileQuality(string tileQuality){
+		if (tileQuality == "slide") {
+			momentumMoving = true;
+		} else if (tileQuality == "stop") {
+			momentumMoving = false;
+		}
 	}
 
 	// Compute where we should move to next. Gets called within FixedUpdate, aka once per physics frame.

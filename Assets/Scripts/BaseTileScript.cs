@@ -34,6 +34,13 @@ public class BaseTileScript : MonoBehaviour {
 		}
 	}
 
+	public string currentTileQuality(){
+		if (this.CompareTag("Ice Tile")){
+			return "slide";
+		}
+		return "stop";
+	}
+
 	// Iterate across the tiles that are adjacent to you and report whether the walker can move into each of them.
 	public bool[] getValidMoves(bool force=false) {
 		if (this.amBlinking) {

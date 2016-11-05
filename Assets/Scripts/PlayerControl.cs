@@ -67,10 +67,6 @@ public class PlayerControl : BaseTileMover {
 			if (ducklingCount > 0){
 				MurderDuckling ("sewer grate");
 			}
-		} else if (other.gameObject.CompareTag ("Ice Tile")) {
-			momentumMoving = true;
-		} else if (other.gameObject.CompareTag ("Grass Tile")) {
-			momentumMoving = false;
 		}
 	}
 
