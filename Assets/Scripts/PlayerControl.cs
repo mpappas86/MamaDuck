@@ -19,6 +19,7 @@ public class PlayerControl : BaseTileMover {
 
 	private int wasMovingDir = -1;
 	private int momentumCountdown = 20;
+	private bool momentumMoving = false;
 
 	public override void Start ()
     {
@@ -56,7 +57,7 @@ public class PlayerControl : BaseTileMover {
 		}
 		// Uses GetTileMove from the BaseTileMover class.
 		this.rb.MovePosition (this.GetTileMove ());
-		if (this.gcs.GetMovementHasMomentum ()) {
+		if (momentumMoving) {
 			if (this.movingDir == -1 && this.wasMovingDir != -1) {
 				this.momentumCountdown -= 1;
 				if (this.momentumCountdown == 0){
@@ -96,7 +97,13 @@ public class PlayerControl : BaseTileMover {
 			//  gcScript.levelWin(Application.loadedLevel);
 			//  lcScript.endLevel();
 		} else if (other.gameObject.CompareTag ("Sewer Grate")) {
-			MurderDuckling("sewer grate");
+			if (ducklingCount > 0){
+				MurderDuckling ("sewer grate");
+			}
+		} else if (other.gameObject.CompareTag ("Ice Tile")) {
+			momentumMoving = true;
+		} else if (other.gameObject.CompareTag ("Grass Tile")) {
+			momentumMoving = false;
 		}
 	}
 

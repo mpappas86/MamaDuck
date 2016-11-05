@@ -148,14 +148,6 @@ public class MainMenuScript : MonoBehaviour
 				settingsMenu = false;
 				soundTest = true;
 			}
-			bool movementSetting = gcScript.GetMovementHasMomentum();
-			string movementSettingString = "Disable Momentum Moving?";
-			if(!movementSetting){
-				movementSettingString = "Enable Momentum Moving?";
-			}
-			if (GUI.Button (new Rect (.1f * Screen.width, .5f * Screen.height, .8f*Screen.width, .12f * Screen.height), movementSettingString)) {
-				gcScript.SetMovementHasMomentum(!movementSetting);
-			}
 			bool vibrationSetting = gcScript.GetVibrations();
 			string vibrationSettingString = "Disable Vibrations?";
 			if(!vibrationSetting){

@@ -9,7 +9,6 @@ public class GameControllerScript : MonoBehaviour
 
 	public static GameControllerScript Instance;
 
-	private int movementHasMomentum;
 	private int vibrations;
 
 	private InputHandler ih;
@@ -38,30 +37,12 @@ public class GameControllerScript : MonoBehaviour
 		} else {
 			currentLevel = 0;
 		}
-		if(PlayerPrefs.HasKey("MovementHasMomentum")){
-			movementHasMomentum = PlayerPrefs.GetInt("MovementHasMomentum");
-		} else {
-			movementHasMomentum = 0;
-		}
 		if(PlayerPrefs.HasKey("Vibrations")){
 			vibrations = PlayerPrefs.GetInt("Vibrations");
 		} else {
 			vibrations = 1;
 		}
 		ih = (InputHandler)gameObject.GetComponent(typeof(InputHandler));
-	}
-
-	public void SetMovementHasMomentum (bool val){
-		if (val) {
-			movementHasMomentum = 1;
-		} else {
-			movementHasMomentum = 0;
-		}
-		PlayerPrefs.SetInt ("MovementHasMomentum", movementHasMomentum);
-	}
-
-	public bool GetMovementHasMomentum(){
-		return movementHasMomentum == 1;
 	}
 
 	public void SetVibrations (bool val){
