@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amStartingTile: 0
+  amStartingTileFor: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

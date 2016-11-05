@@ -11,6 +11,8 @@ TagManager:
   - Tile
   - ObtainedDuckling
   - LevelController
+  - Grass Tile
+  - Ice Tile
   layers:
   - Default
   - TransparentFX

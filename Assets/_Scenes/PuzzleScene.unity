@@ -692,7 +692,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!4 &279876475 stripped
 Transform:
   m_PrefabParentObject: {fileID: 425360, guid: 438aaebeee66e4f15a90cb74b2c68353, type: 2}
@@ -1146,7 +1146,7 @@ Transform:
   - {fileID: 1485232800}
   - {fileID: 759661044}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
 --- !u!1001 &432279248
 Prefab:
   m_ObjectHideFlags: 0
@@ -4105,7 +4105,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!82 &1605537016
 AudioSource:
   m_ObjectHideFlags: 0
