@@ -13,6 +13,7 @@ public class BaseTileMover : MonoBehaviour {
 	private float movedDistance = 0;
 	public bool isMoving;
 	public bool[] valid_moves;
+	public bool momentumMoving = false;
 	
 	// Up, Down, Left, Right = 0, 1, 2, 3
 	

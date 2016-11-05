@@ -19,7 +19,6 @@ public class PlayerControl : BaseTileMover {
 
 	private int wasMovingDir = -1;
 	private int momentumCountdown = 20;
-	private bool momentumMoving = false;
 
 	public override void Start ()
     {
@@ -32,7 +31,7 @@ public class PlayerControl : BaseTileMover {
 	
 	void Update ()
 	{
-		if (!this.isMoving) {
+		if (!this.isMoving && !momentumMoving) {
 			int dir = ih.getInputDir ();
 			if (dir != -1){
 				this.movingDir = dir;
