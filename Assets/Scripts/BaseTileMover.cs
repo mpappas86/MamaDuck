@@ -44,6 +44,8 @@ public class BaseTileMover : MonoBehaviour {
 			}
 			if (this.valid_moves[movingDir]){
 				isMoving = true;
+			} else {
+				momentumMoving = false;
 			}
 		}
 		// If we have a valid direction and a desire to move, let's do it!
