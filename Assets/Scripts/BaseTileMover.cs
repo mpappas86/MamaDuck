@@ -14,6 +14,10 @@ public class BaseTileMover : MonoBehaviour {
 	public bool isMoving;
 	public bool[] valid_moves;
 	public bool momentumMoving = false;
+
+	private int wasMovingDir = -1;
+	private int momentumCountdown = 20;
+	private InputHandler ih;
 	
 	// Up, Down, Left, Right = 0, 1, 2, 3
 	
@@ -22,6 +26,38 @@ public class BaseTileMover : MonoBehaviour {
 		rb = this.gameObject.GetComponent<Rigidbody> ();
 		// TileMoving objects should never have physics push them in the y direction, nor should it rotate them.
 		rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
+		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
+	}
+
+	public virtual void Update ()
+	{
+		if (!this.isMoving && !momentumMoving) {
+			int dir = ih.getInputDir ();
+			if (dir != -1){
+				this.movingDir = dir;
+				this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
+			}
+		}
+	}
+	
+	void FixedUpdate()
+	{
+		if (this.movingDir != -1) {
+			wasMovingDir = this.movingDir;
+		}
+		// Uses GetTileMove from the BaseTileMover class.
+		this.rb.MovePosition (this.GetTileMove ());
+		if (momentumMoving) {
+			if (this.movingDir == -1 && this.wasMovingDir != -1) {
+				this.momentumCountdown -= 1;
+				if (this.momentumCountdown == 0){
+					this.movingDir = wasMovingDir;
+					this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
+					this.momentumCountdown = 20;
+				}
+			}
+		}
 	}
 
 	// Public setter for TileTrigger - TileTrigger calls this to inform us where we can go each time we step onto a new tile. 

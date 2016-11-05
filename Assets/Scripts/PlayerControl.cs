@@ -13,58 +13,26 @@ public class PlayerControl : BaseTileMover {
 	public int breadCountScore = 100;    // How many points bread crumbs are worth.
 	public int ducklingCount = 0;        // Tracker for # ducklings we've collected
 	public int totalDucklings;           // Total ducklings that can be found in this level.
-
-	private InputHandler ih;
+	
 	private GameControllerScript gcs;
-
-	private int wasMovingDir = -1;
-	private int momentumCountdown = 20;
 
 	public override void Start ()
     {
 		base.Start();
 		setMainText();
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
-		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
 		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript));
     }
-	
-	void Update ()
-	{
-		if (!this.isMoving && !momentumMoving) {
-			int dir = ih.getInputDir ();
-			if (dir != -1){
-				this.movingDir = dir;
-				this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
-			}
-		}
 
+	public override void Update ()
+	{
+		base.Update ();
 		// Every wayPointTimer seconds, update the waypoint position.
 		if (this.wayPointTimer > 0) {
 			this.wayPointTimer -= Time.deltaTime;
 		} else {
 			UpdateWaypoint ();
 			this.wayPointTimer = 0.01f;
-		}
-
-	}
-
-	void FixedUpdate()
-	{
-		if (this.movingDir != -1) {
-			wasMovingDir = this.movingDir;
-		}
-		// Uses GetTileMove from the BaseTileMover class.
-		this.rb.MovePosition (this.GetTileMove ());
-		if (momentumMoving) {
-			if (this.movingDir == -1 && this.wasMovingDir != -1) {
-				this.momentumCountdown -= 1;
-				if (this.momentumCountdown == 0){
-					this.movingDir = wasMovingDir;
-					this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
-					this.momentumCountdown = 20;
-				}
-			}
 		}
 	}
 
