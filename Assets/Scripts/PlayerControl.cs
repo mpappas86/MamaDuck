@@ -8,7 +8,7 @@ public class PlayerControl : BaseTileMover {
 	public Text mainText;         // Primary text object
 	private int score = 0;        // Player score
 	
-	private float wayPointTimer = 0.5f;  // How frequently we update the waypoint
+	private float wayPointTimer = 0.01f;  // How frequently we update the waypoint
 	public int breadCountScore = 100;    // How many points bread crumbs are worth.
 	public int ducklingCount = 0;        // Tracker for # ducklings we've collected
 	public int totalDucklings;           // Total ducklings that can be found in this level.
@@ -43,7 +43,7 @@ public class PlayerControl : BaseTileMover {
 			this.wayPointTimer -= Time.deltaTime;
 		} else {
 			UpdateWaypoint ();
-			this.wayPointTimer = 0.5f;
+			this.wayPointTimer = 0.01f;
 		}
 
 	}
