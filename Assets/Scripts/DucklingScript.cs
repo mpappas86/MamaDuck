@@ -24,7 +24,7 @@ public class DucklingScript : MonoBehaviour {
 		// If we make contanct with Mama, make sure we note that it happened and alert Mama that she found us.
 		} else if (other.gameObject.CompareTag("Player")) {
 			contactWithMama = true;
-			mamaScript.ObtainDuckling();
+			mamaScript.ObtainDuckling(this.gameObject);
             // markcode: play the duckling_pickup audio which happens to be number 3
             sfxScript.playAudio(3);
         }

@@ -7,6 +7,7 @@ public class PlayerControl : BaseTileMover {
 	public GameObject wayPoint;   // Invisible gameobject tracking Mama's location so duckling can follow
 	public Text mainText;         // Primary text object
 	private int score = 0;        // Player score
+	private GameObject myDuckling; // Duckling we've obtained if any
 	
 	private float wayPointTimer = 0.01f;  // How frequently we update the waypoint
 	public int breadCountScore = 100;    // How many points bread crumbs are worth.
@@ -69,9 +70,10 @@ public class PlayerControl : BaseTileMover {
 
 	// Public method called by ducklings when mama reaches them so mama can update the score and text.
 	// TODO: Move text, score, and methods like this to the GameController?
-	public void ObtainDuckling()
+	public void ObtainDuckling(GameObject duckling)
 	{
 		this.ducklingCount += 1;
+		this.myDuckling = duckling;
 		this.setMainText ();
 	}
 		
@@ -90,10 +92,12 @@ public class PlayerControl : BaseTileMover {
 			this.score += breadCountScore;
 			other.gameObject.SetActive (false);
 			setMainText ();
-			gcs.vibrate();
-          //  gcScript.levelWin(Application.loadedLevel);
-          //  lcScript.endLevel();
-        }
+			gcs.vibrate ();
+			//  gcScript.levelWin(Application.loadedLevel);
+			//  lcScript.endLevel();
+		} else if (other.gameObject.CompareTag ("Sewer Grate")) {
+			MurderDuckling("sewer grate");
+		}
 	}
 
 	// Text setter based on how many ducklings we've collected.
@@ -113,8 +117,9 @@ public class PlayerControl : BaseTileMover {
 	}
 
 	// Score/text updater in the case that a duckling gets murdered.
-	public void MurderDuckling(GameObject duckling, string cause){
+	public void MurderDuckling(string cause){
 		this.ducklingCount -= 1;
+		this.myDuckling.SetActive (false);
 		this.mainText.text = "You just lost a duckling to a " + cause + "! You monster!";
 	}
 
