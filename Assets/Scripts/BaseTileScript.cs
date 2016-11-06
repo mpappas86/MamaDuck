@@ -13,7 +13,7 @@ public class BaseTileScript : MonoBehaviour {
 	private float blinkCadence = 0.5f;                    // Rate at which to blink if something changes.
 	private bool amBlinking = false;                      // Whether I'm goddamn blinking.
 	private bool activateBlinking = false;                // Start blinking when I get turned active?
-	private string[] tileTypes = new string[] {"Sewer Grate", "Ice Tile", "Grass Tile"};
+	private string[] tileTypes = new string[] {"Sewer Grate", "Ice Tile", "Grass Tile", "Wall"};
 	
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
@@ -116,26 +116,6 @@ public class BaseTileScript : MonoBehaviour {
 				} else if (Mathf.Abs (dot +4) < 0.1) {
 					up_tile = colGO;
 				}
-			} else {
-				if (col.gameObject.transform.parent == null){
-					continue;
-				}
-				colGO = col.gameObject.transform.parent.gameObject;
-				if(colGO.CompareTag("Tile")){
-					// This vector <1, 2, 4> basically forces the tiles to express themselves in binary - the results of the dot
-					// product should be the results of this vector by <+-1,0,0> and <0,0,+-4>, so the resulting values
-					// should be +-1 (for left/right tiles) and +-4 (for up/down tiles).
-					float dot = Vector3.Dot (transform.position - colGO.transform.position, new Vector3(1, 2, 4));
-					if (Mathf.Abs(dot-1) < 0.1){
-						left_tile = colGO;
-					} else if (Mathf.Abs (dot+1) < 0.1){
-						right_tile = colGO;
-					} else if (Mathf.Abs (dot-4) < 0.1) {
-						down_tile = colGO;
-					} else if (Mathf.Abs (dot +4) < 0.1) {
-						up_tile = colGO;
-					}
-				}	
 			}
 		}
 		return new List<GameObject>(new GameObject[] {up_tile, down_tile, left_tile, right_tile});

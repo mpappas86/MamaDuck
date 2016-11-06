@@ -217,7 +217,8 @@ public class InputHandler: MonoBehaviour
 		}
 		return new float[]{0, 0};
 	}
-	
+
+	// -1 is left, 1 is right
 	public int reduceXDir(int dir){
 		if(dir == 2){
 			return -1;
@@ -226,7 +227,8 @@ public class InputHandler: MonoBehaviour
 		}
 		return 0;
 	}
-	
+
+	// -1 is up, 1 is down
 	public int reduceYDir(int dir){
 		if(dir == 0){
 			return 1;

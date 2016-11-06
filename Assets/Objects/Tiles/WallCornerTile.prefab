@@ -28,8 +28,6 @@ GameObject:
   - 4: {fileID: 463684}
   - 33: {fileID: 3340080}
   - 23: {fileID: 2353088}
-  - 65: {fileID: 6551910}
-  - 114: {fileID: 11433994}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -46,9 +44,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 483928}
   - 114: {fileID: 11428424}
+  - 65: {fileID: 6511262}
+  - 114: {fileID: 11402728}
   m_Layer: 0
   m_Name: WallCornerTile
-  m_TagString: Tile
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,12 +227,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &6551910
+--- !u!65 &6511262
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 147934}
+  m_GameObject: {fileID: 174198}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -251,6 +251,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11402728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amStartingTileFor: {fileID: 0}
 --- !u!114 &11428424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,18 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amPassable: 00000000
---- !u!114 &11433994
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 147934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amStartingTile: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -288,7 +288,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Tile
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: amPassable

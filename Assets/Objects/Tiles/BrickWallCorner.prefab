@@ -61,9 +61,6 @@ GameObject:
   - 4: {fileID: 455366}
   - 33: {fileID: 3352582}
   - 23: {fileID: 2339860}
-  - 65: {fileID: 6524278}
-  - 114: {fileID: 11411790}
-  - 114: {fileID: 11429982}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -146,9 +143,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 477488}
   - 114: {fileID: 11433808}
+  - 65: {fileID: 6546492}
+  - 114: {fileID: 11450302}
   m_Layer: 0
   m_Name: BrickWallCorner
-  m_TagString: Tile
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -491,42 +490,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105364}
   m_Mesh: {fileID: 4300002, guid: 720bb16a497f64dc79d594aac30fc1e9, type: 3}
---- !u!65 &6524278
+--- !u!65 &6546492
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 125970}
+  m_GameObject: {fileID: 194098}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: .5}
   m_Center: {x: 0, y: 0, z: -.25}
---- !u!114 &11411790
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 125970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amStartingTileFor: {fileID: 0}
---- !u!114 &11429982
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 125970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amStartingTileFor: {fileID: 0}
 --- !u!114 &11433808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -539,6 +514,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amPassable: 00000000
+--- !u!114 &11450302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amStartingTileFor: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -548,7 +535,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Tile
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

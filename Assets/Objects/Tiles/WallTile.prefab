@@ -9,9 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 416194}
   - 114: {fileID: 11463562}
+  - 65: {fileID: 6507874}
+  - 114: {fileID: 11436512}
   m_Layer: 0
   m_Name: WallTile
-  m_TagString: Tile
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,8 +28,6 @@ GameObject:
   - 4: {fileID: 448028}
   - 33: {fileID: 3356674}
   - 23: {fileID: 2372800}
-  - 65: {fileID: 6540288}
-  - 114: {fileID: 11446406}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -154,6 +154,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173596}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6507874
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: .5}
+  m_Center: {x: 0, y: 0, z: -.25}
 --- !u!65 &6519758
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -166,30 +178,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &6540288
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173596}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: .5}
-  m_Center: {x: 0, y: 0, z: -.25}
---- !u!114 &11446406
+--- !u!114 &11436512
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173596}
+  m_GameObject: {fileID: 134258}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a13be769724a49809a36614c943521a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amStartingTile: 0
+  amStartingTileFor: {fileID: 0}
 --- !u!114 &11463562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,7 +226,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Tile
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: amPassable

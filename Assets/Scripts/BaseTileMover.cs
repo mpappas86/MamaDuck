@@ -16,7 +16,6 @@ public class BaseTileMover : MonoBehaviour {
 	public bool[] valid_moves;
 
 	public bool momentumMoving = false;
-	private int momentumCountdown = 20;
 	private InputHandler ih;
 	
 	// Up, Down, Left, Right = 0, 1, 2, 3
@@ -32,7 +31,7 @@ public class BaseTileMover : MonoBehaviour {
 
 	public virtual void Update ()
 	{
-		if (!this.isMoving && !momentumMoving) {
+		if (!this.isMoving) {
 			int dir = ih.getInputDir ();
 			if (dir != -1){
 				this.movingDir = dir;
@@ -43,21 +42,8 @@ public class BaseTileMover : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		if (this.movingDir != -1) {
-			wasMovingDir = this.movingDir;
-		}
 		// Uses GetTileMove from the BaseTileMover class.
 		this.rb.MovePosition (this.GetTileMove ());
-		if (momentumMoving) {
-			if (this.movingDir == -1 && this.wasMovingDir != -1) {
-				this.momentumCountdown -= 1;
-				if (this.momentumCountdown == 0){
-					this.movingDir = wasMovingDir;
-					this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
-					this.momentumCountdown = 20;
-				}
-			}
-		}
 	}
 
 	// Public setter for TileTrigger - TileTrigger calls this to inform us where we can go each time we step onto a new tile. 
@@ -76,20 +62,20 @@ public class BaseTileMover : MonoBehaviour {
 	// Compute where we should move to next. Gets called within FixedUpdate, aka once per physics frame.
 	public Vector3 GetTileMove (){
 		Vector3 destination = transform.position;
+
 		// If there are no valid moves to take, or we don't know what the valid moves are, don't move.
 		if (this.valid_moves == null) {
 			return destination;
 		}
+
 		// If we're not currently moving, check if there's a direction we'd like to move (movingDir).
 		// If not, just don't move, but if so (and the desired direction is a valid move), then let's move there!
 		if (!isMoving) {
 			if (movingDir == -1){
-				return destination;
-			}
-			if (this.valid_moves[movingDir]){
-				isMoving = true;
-			} else {
 				momentumMoving = false;
+				return destination;
+			} else if (this.valid_moves[movingDir]){
+				isMoving = true;
 			}
 		}
 		// If we have a valid direction and a desire to move, let's do it!
@@ -108,9 +94,11 @@ public class BaseTileMover : MonoBehaviour {
 		// If we've finished traversing this tile, reset all the relevant vars - especially isMoving, which shows that we're
 		// no longer actively walking on any tile.
 		if (this.movedDistance == 1) {
+			if (!momentumMoving){
+				this.movingDir = -1;
+				this.movingVec = new Vector3(0, 0, 0);
+			}
 			this.isMoving = false;
-			this.movingDir = -1;
-			this.movingVec = new Vector3(0, 0, 0);
 			this.movedDistance = 0;
 		}
 		return destination;
