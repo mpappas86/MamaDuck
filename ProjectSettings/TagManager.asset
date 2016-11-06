@@ -13,6 +13,7 @@ TagManager:
   - LevelController
   - Grass Tile
   - Ice Tile
+  - Button Tile
   layers:
   - Default
   - TransparentFX

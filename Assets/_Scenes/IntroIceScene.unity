@@ -222,7 +222,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!82 &118086982
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1227,6 +1227,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 24
       objectReference: {fileID: 0}
+    - target: {fileID: 6546492, guid: fa0fa10e070604d84ba0b998dd242389, type: 2}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6546492, guid: fa0fa10e070604d84ba0b998dd242389, type: 2}
+      propertyPath: m_Size.x
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa0fa10e070604d84ba0b998dd242389, type: 2}
   m_IsPrefabParent: 0
@@ -1849,7 +1857,7 @@ Transform:
   - {fileID: 2127019284}
   - {fileID: 1290989469}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1001 &1466631478
 Prefab:
   m_ObjectHideFlags: 0
@@ -2443,7 +2451,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 477488, guid: fa0fa10e070604d84ba0b998dd242389, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa0fa10e070604d84ba0b998dd242389, type: 2}

@@ -12,7 +12,6 @@ public class BaseTileMover : MonoBehaviour {
 
 	private float movedDistance = 0;
 	public bool isMoving;
-	private int wasMovingDir = -1;
 	public bool[] valid_moves;
 
 	public bool momentumMoving = false;
@@ -31,7 +30,7 @@ public class BaseTileMover : MonoBehaviour {
 
 	public virtual void Update ()
 	{
-		if (!this.isMoving) {
+		if (!this.isMoving && !momentumMoving) {
 			int dir = ih.getInputDir ();
 			if (dir != -1){
 				this.movingDir = dir;
@@ -51,6 +50,7 @@ public class BaseTileMover : MonoBehaviour {
 		this.valid_moves = new_valid_moves;
 	}
 
+	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
 	public void setTileQuality(string tileQuality){
 		if (tileQuality == "slide") {
 			momentumMoving = true;
@@ -71,11 +71,11 @@ public class BaseTileMover : MonoBehaviour {
 		// If we're not currently moving, check if there's a direction we'd like to move (movingDir).
 		// If not, just don't move, but if so (and the desired direction is a valid move), then let's move there!
 		if (!isMoving) {
-			if (movingDir == -1){
+			if (movingDir != -1 && this.valid_moves[movingDir]){
+				isMoving = true;
+			} else {
 				momentumMoving = false;
 				return destination;
-			} else if (this.valid_moves[movingDir]){
-				isMoving = true;
 			}
 		}
 		// If we have a valid direction and a desire to move, let's do it!
@@ -91,9 +91,11 @@ public class BaseTileMover : MonoBehaviour {
 			}
 			destination += this.movingVec * toMove;
 		}
+
 		// If we've finished traversing this tile, reset all the relevant vars - especially isMoving, which shows that we're
 		// no longer actively walking on any tile.
 		if (this.movedDistance == 1) {
+			// If we're momentum moving, we want to maintain our moving dir, since we're still going to try to move again.
 			if (!momentumMoving){
 				this.movingDir = -1;
 				this.movingVec = new Vector3(0, 0, 0);

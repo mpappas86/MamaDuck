@@ -13,7 +13,7 @@ public class BaseTileScript : MonoBehaviour {
 	private float blinkCadence = 0.5f;                    // Rate at which to blink if something changes.
 	private bool amBlinking = false;                      // Whether I'm goddamn blinking.
 	private bool activateBlinking = false;                // Start blinking when I get turned active?
-	private string[] tileTypes = new string[] {"Sewer Grate", "Ice Tile", "Grass Tile", "Wall"};
+	private string[] tileTypes = new string[] {"Sewer Grate", "Ice Tile", "Grass Tile", "Wall", "Button Tile"};
 	
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
@@ -56,6 +56,7 @@ public class BaseTileScript : MonoBehaviour {
 		valid_moves [1] = is_valid_move (adjacent_tiles [1], 1);
 		valid_moves [2] = is_valid_move (adjacent_tiles [2], 2);
 		valid_moves [3] = is_valid_move (adjacent_tiles [3], 3);
+
 		return valid_moves;
 	}
 
