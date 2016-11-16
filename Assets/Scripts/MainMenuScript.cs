@@ -138,7 +138,7 @@ public class MainMenuScript : MonoBehaviour
 						Application.LoadLevel (5);
 						break;
 					case 5:
-						text = "No Level 6 Built Yet";
+						Application.LoadLevel (6);
 						break;
 					}
 				}
