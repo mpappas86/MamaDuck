@@ -13,8 +13,11 @@ public class BaseTileScript : MonoBehaviour {
 	private float blinkCadence = 0.5f;                    // Rate at which to blink if something changes.
 	private bool amBlinking = false;                      // Whether I'm goddamn blinking.
 	private bool activateBlinking = false;                // Start blinking when I get turned active?
-	private string[] tileTypes = new string[] {"Sewer Grate", "Ice Tile", "Grass Tile", "Wall", "Button Tile"};
-	
+	private string[] tileTypes = new string[] {
+		"Sewer Grate", "Ice Tile", "Grass Tile", "Wall", "Button Tile", "Current Tile"
+	};
+	public int current_flow_direction = -1;
+
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
 		initialColor = myRenderer.material.color;
@@ -35,10 +38,16 @@ public class BaseTileScript : MonoBehaviour {
 	}
 
 	public string currentTileQuality(){
-		if (this.CompareTag("Ice Tile")){
+		if (this.CompareTag ("Ice Tile")) {
 			return "slide";
+		} else if (this.CompareTag ("Current Tile")) {
+			return "current";
 		}
 		return "stop";
+	}
+
+	public int getCurrentDirection(){
+		return current_flow_direction;
 	}
 
 	// Iterate across the tiles that are adjacent to you and report whether the walker can move into each of them.

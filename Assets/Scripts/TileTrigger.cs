@@ -25,7 +25,11 @@ public class TileTrigger : MonoBehaviour {
 	void setCurrentStatus(Collider obj, bool[] valid_moves, string tileQuality){
 		BaseTileMover btm = (BaseTileMover) obj.GetComponent(typeof(BaseTileMover));
 		btm.setValidMoves(valid_moves);
-		btm.setTileQuality (tileQuality);
+		if (tileQuality == "current") {
+			btm.setTileQuality(tileQuality, bts.getCurrentDirection());
+		} else {
+			btm.setTileQuality (tileQuality);
+		}
 	}
 
 }

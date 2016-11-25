@@ -13,6 +13,7 @@ public class BaseTileMover : MonoBehaviour {
 	private float movedDistance = 0;
 	public bool isMoving;
 	public bool[] valid_moves;
+	private int nextDir = -1; // Used to track dir to turn to if we hit a current.
 
 	public bool momentumMoving = false;
 	private InputHandler ih;
@@ -34,14 +35,17 @@ public class BaseTileMover : MonoBehaviour {
 			int dir = ih.getInputDir ();
 			if (dir != -1){
 				this.movingDir = dir;
-				this.movingVec = new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
+				this.movingVec = computeMovingVec(this.movingDir);
 			}
 		}
+	}
+
+	private Vector3 computeMovingVec(int dir){
+		return new Vector3 (ih.reduceXDir (this.movingDir), 0, ih.reduceYDir (this.movingDir));
 	}
 	
 	void FixedUpdate()
 	{
-		// Uses GetTileMove from the BaseTileMover class.
 		this.rb.MovePosition (this.GetTileMove ());
 	}
 
@@ -56,6 +60,16 @@ public class BaseTileMover : MonoBehaviour {
 			momentumMoving = true;
 		} else if (tileQuality == "stop") {
 			momentumMoving = false;
+		} else if (tileQuality == "geyser") {
+			momentumMoving = true;
+		}
+	}
+
+	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
+	public void setTileQuality(string tileQuality, int direction){
+		if (tileQuality == "current") {
+			momentumMoving = true;
+			this.nextDir = direction;
 		}
 	}
 
@@ -99,6 +113,10 @@ public class BaseTileMover : MonoBehaviour {
 			if (!momentumMoving){
 				this.movingDir = -1;
 				this.movingVec = new Vector3(0, 0, 0);
+			} else if (nextDir != -1){
+				this.movingDir = this.nextDir;
+				this.movingVec = computeMovingVec(this.movingDir);
+				this.nextDir = -1;
 			}
 			this.isMoving = false;
 			this.movedDistance = 0;

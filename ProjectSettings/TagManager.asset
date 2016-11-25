@@ -14,6 +14,7 @@ TagManager:
   - Grass Tile
   - Ice Tile
   - Button Tile
+  - Current Tile
   layers:
   - Default
   - TransparentFX
