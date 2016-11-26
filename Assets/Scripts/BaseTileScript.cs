@@ -14,7 +14,7 @@ public class BaseTileScript : MonoBehaviour {
 	private bool amBlinking = false;                      // Whether I'm goddamn blinking.
 	private bool activateBlinking = false;                // Start blinking when I get turned active?
 	private string[] tileTypes = new string[] {
-		"Sewer Grate", "Ice Tile", "Grass Tile", "Wall", "Button Tile", "Current Tile"
+		"Sewer Grate", "Ice Tile", "Grass Tile", "Wall", "Button Tile", "Current Tile", "Geyser Tile"
 	};
 	public int current_flow_direction = -1;
 
@@ -42,6 +42,8 @@ public class BaseTileScript : MonoBehaviour {
 			return "slide";
 		} else if (this.CompareTag ("Current Tile")) {
 			return "current";
+		} else if (this.CompareTag ("Geyser Tile")) {
+			return "geyser";
 		}
 		return "stop";
 	}

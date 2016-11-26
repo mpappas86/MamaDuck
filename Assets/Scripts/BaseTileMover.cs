@@ -14,6 +14,7 @@ public class BaseTileMover : MonoBehaviour {
 	public bool isMoving;
 	public bool[] valid_moves;
 	private int nextDir = -1; // Used to track dir to turn to if we hit a current.
+	private int geyserFlight = 0; // Used to track if we are flying over a wall per a geyser
 
 	public bool momentumMoving = false;
 	private InputHandler ih;
@@ -57,18 +58,22 @@ public class BaseTileMover : MonoBehaviour {
 	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
 	public void setTileQuality(string tileQuality){
 		if (tileQuality == "slide") {
-			momentumMoving = true;
+			this.momentumMoving = true;
 		} else if (tileQuality == "stop") {
-			momentumMoving = false;
+			if (this.geyserFlight == 0){
+				this.momentumMoving = false;
+			}
 		} else if (tileQuality == "geyser") {
-			momentumMoving = true;
+			this.nextDir = this.movingDir;
+			this.geyserFlight = 2;
+			this.momentumMoving = true;
 		}
 	}
 
 	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
 	public void setTileQuality(string tileQuality, int direction){
 		if (tileQuality == "current") {
-			momentumMoving = true;
+			this.momentumMoving = true;
 			this.nextDir = direction;
 		}
 	}
@@ -84,9 +89,17 @@ public class BaseTileMover : MonoBehaviour {
 
 		// If we're not currently moving, check if there's a direction we'd like to move (movingDir).
 		// If not, just don't move, but if so (and the desired direction is a valid move), then let's move there!
-		if (!isMoving) {
-			if (movingDir != -1 && this.valid_moves[movingDir]){
-				isMoving = true;
+		if (!this.isMoving) {
+			if (this.movingDir != -1){
+				if (this.geyserFlight != 0){
+					this.isMoving = true;
+					this.geyserFlight = this.geyserFlight - 1;
+				} else if (this.valid_moves[this.movingDir]){
+					this.isMoving = true;
+				} else {
+					this.momentumMoving = false;
+					return destination;
+				}
 			} else {
 				momentumMoving = false;
 				return destination;
@@ -113,10 +126,13 @@ public class BaseTileMover : MonoBehaviour {
 			if (!momentumMoving){
 				this.movingDir = -1;
 				this.movingVec = new Vector3(0, 0, 0);
+				this.nextDir = -1;
 			} else if (nextDir != -1){
 				this.movingDir = this.nextDir;
 				this.movingVec = computeMovingVec(this.movingDir);
-				this.nextDir = -1;
+				if (this.geyserFlight == 0){;
+					this.nextDir = -1;
+				}
 			}
 			this.isMoving = false;
 			this.movedDistance = 0;

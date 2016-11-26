@@ -15,6 +15,7 @@ TagManager:
   - Ice Tile
   - Button Tile
   - Current Tile
+  - Geyser Tile
   layers:
   - Default
   - TransparentFX
