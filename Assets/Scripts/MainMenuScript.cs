@@ -110,9 +110,6 @@ public class MainMenuScript : MonoBehaviour
 				main = false;
 				backButton = true;
 			}
-			if (GUI.Button (new Rect (.1f * Screen.width, .65f * Screen.height, .8f*Screen.width, .12f * Screen.height), "How To Play")) {
-				Application.LoadLevel("TutorialScene");
-			} 
 		} else if (levelMenu) {
 			//The selectionGrid will allow you to choose exactly one of a set of buttons. levelGridInt is initialized to -1 so no level starts out selected.
 			int tempInt = GUI.SelectionGrid (new Rect (.1f * Screen.width, .4f * Screen.height, .8f*Screen.width, .4f * Screen.height), levelGridInt, levelStrings, 4);
@@ -141,7 +138,7 @@ public class MainMenuScript : MonoBehaviour
 		} else if (settingsMenu) {
 			GUI.Label(new Rect(.1f * Screen.width, .1f * Screen.height, .8f*Screen.width, .08f * Screen.height), "Volume", volStyle);
 			theVolume = GUI.HorizontalSlider(new Rect(.1f * Screen.width, .2f * Screen.height, .8f*Screen.width, .2f * Screen.height), theVolume, 0.0F, 1.0F);
-			if (GUI.Button (new Rect (.1f * Screen.width, .3f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Sound Test")) {
+			if (GUI.Button (new Rect (.1f * Screen.width, .4f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Sound Test")) {
 				settingsMenu = false;
 				soundTest = true;
 			}

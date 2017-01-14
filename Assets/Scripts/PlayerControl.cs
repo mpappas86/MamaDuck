@@ -25,9 +25,9 @@ public class PlayerControl : BaseTileMover {
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
 		gcs = (GameControllerScript)gc.GetComponent (typeof(GameControllerScript));
 
-        anims = (Animation)gameObject.GetComponent(typeof(Animation));
-        anims.wrapMode = WrapMode.Loop;
-        anims.Play(anims.GetClip("Idle1"));
+        //anims = (Animation)gameObject.GetComponent(typeof(Animation));
+        //anims.wrapMode = WrapMode.Loop;
+        //anims.Play(anims.GetClip("Idle1"));
     }
 
 	public override void Update ()
