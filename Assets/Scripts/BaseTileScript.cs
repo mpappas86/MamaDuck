@@ -7,6 +7,8 @@ public class BaseTileScript : MonoBehaviour {
 	
 	public bool[] amPassable = {true, true, true, true};  // Whether or not this tile can be passed through via each of the
 	                                                      // four possible directions.
+	public string docstring = "up0:::down1:::left2:::right3";  // You can ignore this, not used in code.
+	                                                           // It's just there to document stuff in the editor.
 	private List<GameObject> adjacent_tiles = null;       // List of all adjacent tiles to this one.
 	private Renderer myRenderer;                          // Accessor to renderer to change colors.
 	private Color initialColor;                           // Initial color of the tile.

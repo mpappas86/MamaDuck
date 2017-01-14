@@ -689,6 +689,10 @@ Prefab:
       propertyPath: m_Name
       value: Ice Tile (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 11421720, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
+      propertyPath: amPassable.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
   m_IsPrefabParent: 0
@@ -4712,6 +4716,14 @@ Prefab:
       propertyPath: m_Name
       value: Ice Tile (42)
       objectReference: {fileID: 0}
+    - target: {fileID: 11421720, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
+      propertyPath: amPassable.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421720, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
+      propertyPath: amPassable.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
   m_IsPrefabParent: 0
@@ -4911,6 +4923,14 @@ Prefab:
     - target: {fileID: 111742, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
       propertyPath: m_Name
       value: Ice Tile (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421720, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
+      propertyPath: amPassable.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421720, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}
+      propertyPath: amPassable.Array.data[0]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c115a94ae51ea4f51b555c27211c84c3, type: 2}

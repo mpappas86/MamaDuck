@@ -138,7 +138,7 @@ public class MainMenuScript : MonoBehaviour
 		} else if (settingsMenu) {
 			GUI.Label(new Rect(.1f * Screen.width, .1f * Screen.height, .8f*Screen.width, .08f * Screen.height), "Volume", volStyle);
 			theVolume = GUI.HorizontalSlider(new Rect(.1f * Screen.width, .2f * Screen.height, .8f*Screen.width, .2f * Screen.height), theVolume, 0.0F, 1.0F);
-			if (GUI.Button (new Rect (.1f * Screen.width, .4f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Sound Test")) {
+			if (GUI.Button (new Rect (.1f * Screen.width, .3f * Screen.height, .8f*Screen.width, .12f * Screen.height), "Sound Test")) {
 				settingsMenu = false;
 				soundTest = true;
 			}
@@ -147,7 +147,7 @@ public class MainMenuScript : MonoBehaviour
 			if(!vibrationSetting){
 				vibrationSettingString = "Enable Vibrations?";
 			}
-			if (GUI.Button (new Rect (.1f * Screen.width, .7f * Screen.height, .8f*Screen.width, .12f * Screen.height), vibrationSettingString)) {
+			if (GUI.Button (new Rect (.1f * Screen.width, .65f * Screen.height, .8f*Screen.width, .12f * Screen.height), vibrationSettingString)) {
 				gcScript.SetVibrations(!vibrationSetting);
 			}
 		} else if (soundTest) {

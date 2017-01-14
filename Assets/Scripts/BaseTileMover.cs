@@ -18,11 +18,10 @@ public class BaseTileMover : MonoBehaviour {
 
 	public bool momentumMoving = false;
 	private InputHandler ih;
-
-    public Animation anim;
-
-	// Up, Down, Left, Right = 0, 1, 2, 3
 	
+	// Up, Down, Left, Right = 0, 1, 2, 3
+
+
 	public virtual void Start ()
 	{
 		rb = this.gameObject.GetComponent<Rigidbody> ();
@@ -30,8 +29,6 @@ public class BaseTileMover : MonoBehaviour {
 		rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
 		GameObject gc = GameObject.FindGameObjectWithTag ("GameController");
 		ih = (InputHandler)gc.GetComponent(typeof(InputHandler));
-
-        anim = this.gameObject.GetComponent<Animation>();
 	}
 
 	public virtual void Update ()
