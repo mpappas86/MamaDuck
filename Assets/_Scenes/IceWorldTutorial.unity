@@ -3463,13 +3463,13 @@ Transform:
   - {fileID: 1775204763}
   - {fileID: 1720192991}
   - {fileID: 1275122714}
+  - {fileID: 1904112477}
   - {fileID: 1475595043}
   - {fileID: 1391231447}
   - {fileID: 275204280}
   - {fileID: 302071097}
   - {fileID: 1796063988}
   - {fileID: 824077056}
-  - {fileID: 1904112477}
   - {fileID: 504164142}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -4897,7 +4897,6 @@ GameObject:
   - 124: {fileID: 1958827306}
   - 81: {fileID: 1958827305}
   - 82: {fileID: 1958827304}
-  - 114: {fileID: 1958827303}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4905,17 +4904,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1958827303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1958827302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af153ec96f4d54ef49ef50764d823e88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1958827304
 AudioSource:
   m_ObjectHideFlags: 0
