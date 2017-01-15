@@ -12,7 +12,7 @@ public class BaseTileMover : MonoBehaviour {
 
 	private float movedDistance = 0;
 	public bool isMoving;
-	public bool[] valid_moves;
+	public string[] valid_moves;
 	private int nextDir = -1; // Used to track dir to turn to if we hit a current.
 	private int geyserFlight = 0; // Used to track if we are flying over a wall per a geyser
 
@@ -52,7 +52,7 @@ public class BaseTileMover : MonoBehaviour {
 	}
 
 	// Public setter for TileTrigger - TileTrigger calls this to inform us where we can go each time we step onto a new tile. 
-	public void setValidMoves(bool[] new_valid_moves){
+	public void setValidMoves(string[] new_valid_moves){
 		this.valid_moves = new_valid_moves;
 	}
 
@@ -66,16 +66,34 @@ public class BaseTileMover : MonoBehaviour {
 			}
 		} else if (tileQuality == "geyser") {
 			this.nextDir = this.movingDir;
-			this.geyserFlight = 2;
+			this.geyserFlight = this.getBaseGeyserFlight(1);
 			this.momentumMoving = true;
 		}
 	}
 
+	public virtual int getGeyserFlightKeyValue(){
+		return 0;
+	}
+
+	public int getBaseGeyserFlight(int geyserMultiplier){
+		int key_value = getGeyserFlightKeyValue();
+		if (key_value == 0) {
+			return 1;
+		} else {
+			return 1 + (geyserMultiplier * key_value);
+		}
+	}
+
+
 	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
-	public void setTileQuality(string tileQuality, int direction){
+	public void setTileQuality(string tileQuality, int relevant_int){
 		if (tileQuality == "current") {
 			this.momentumMoving = true;
-			this.nextDir = direction;
+			this.nextDir = relevant_int;
+		} else if (tileQuality == "geyser") {
+			this.nextDir = this.movingDir;
+			this.geyserFlight = this.getBaseGeyserFlight(relevant_int);
+			this.momentumMoving = true;
 		}
 	}
 
@@ -92,20 +110,26 @@ public class BaseTileMover : MonoBehaviour {
 		// If not, just don't move, but if so (and the desired direction is a valid move), then let's move there!
 		if (!this.isMoving) {
 			if (this.movingDir != -1){
-				if (this.geyserFlight != 0){
-					this.isMoving = true;
-					this.geyserFlight = this.geyserFlight - 1;
-				} else if (this.valid_moves[this.movingDir]){
-					this.isMoving = true;
-				} else {
+				if (this.valid_moves[this.movingDir] == null){
 					this.momentumMoving = false;
 					return destination;
+				} else {
+					if (this.geyserFlight != 0){
+						this.isMoving = true;
+						this.geyserFlight = this.geyserFlight - 1;
+					} else if (this.valid_moves[this.movingDir] == "True"){
+						this.isMoving = true;
+					} else {
+						this.momentumMoving = false;
+						return destination;
+					}
 				}
 			} else {
 				momentumMoving = false;
 				return destination;
 			}
 		}
+
 		// If we have a valid direction and a desire to move, let's do it!
 		if (isMoving) {
 			float toMove = speed*Time.deltaTime;

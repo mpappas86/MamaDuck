@@ -22,11 +22,13 @@ public class TileTrigger : MonoBehaviour {
 		}
 	}
 
-	void setCurrentStatus(Collider obj, bool[] valid_moves, string tileQuality){
+	void setCurrentStatus(Collider obj, string[] valid_moves, string tileQuality){
 		BaseTileMover btm = (BaseTileMover) obj.GetComponent(typeof(BaseTileMover));
 		btm.setValidMoves(valid_moves);
 		if (tileQuality == "current") {
 			btm.setTileQuality(tileQuality, bts.getCurrentDirection());
+		} else if (tileQuality == "geyser") {
+			btm.setTileQuality (tileQuality, bts.geyserMultiplier);
 		} else {
 			btm.setTileQuality (tileQuality);
 		}

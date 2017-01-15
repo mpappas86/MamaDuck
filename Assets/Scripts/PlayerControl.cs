@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class PlayerControl : BaseTileMover {
@@ -7,7 +8,7 @@ public class PlayerControl : BaseTileMover {
 	public GameObject wayPoint;   // Invisible gameobject tracking Mama's location so duckling can follow
 	public Text mainText;         // Primary text object
 	private int score = 0;        // Player score
-	private GameObject myDuckling; // Duckling we've obtained if any
+	private List<GameObject> myDucklings = new List<GameObject>(); // Ducklings we've obtained if any
 	
 	private float wayPointTimer = 0.01f;  // How frequently we update the waypoint
 	public int breadCountScore = 100;    // How many points bread crumbs are worth.
@@ -47,7 +48,7 @@ public class PlayerControl : BaseTileMover {
 	public void ObtainDuckling(GameObject duckling)
 	{
 		this.ducklingCount += 1;
-		this.myDuckling = duckling;
+		this.myDucklings.Add(duckling);
 		this.setMainText ();
 	}
 		
@@ -76,6 +77,10 @@ public class PlayerControl : BaseTileMover {
 		}
 	}
 
+	public override int getGeyserFlightKeyValue(){
+		return this.myDucklings.Count;
+	}
+	
 	// Text setter based on how many ducklings we've collected.
 	string DucklingText(){
 		if (this.ducklingCount == 0) {
@@ -95,7 +100,9 @@ public class PlayerControl : BaseTileMover {
 	// Score/text updater in the case that a duckling gets murdered.
 	public void MurderDuckling(string cause){
 		this.ducklingCount -= 1;
-		this.myDuckling.SetActive (false);
+		foreach (GameObject duckling in this.myDucklings) {
+			duckling.SetActive(false);
+		}
 		this.mainText.text = "You just lost a duckling to a " + cause + "! You monster!";
 	}
 

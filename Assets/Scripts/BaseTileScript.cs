@@ -19,6 +19,7 @@ public class BaseTileScript : MonoBehaviour {
 		"Sewer Grate", "Ice Tile", "Grass Tile", "Wall", "Button Tile", "Current Tile", "Geyser Tile"
 	};
 	public int current_flow_direction = -1;
+	public int geyserMultiplier = 0;                     // Geyser multiplier - if set, you move 1 + (ducklings*multiplier) spaces
 
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
@@ -31,9 +32,9 @@ public class BaseTileScript : MonoBehaviour {
 	}
 
 	// Determine if a move is valid given the tile the move would go into, and the direction along which the movement occurs.
-	private bool is_valid_move(GameObject tile, int dir){
+	private string is_valid_move(GameObject tile, int dir){
 		if (tile == null) {
-			return false;
+			return null;
 		} else {
 			return ((BaseTileScript)tile.GetComponent(typeof(BaseTileScript))).canPass(dir);
 		}
@@ -55,7 +56,7 @@ public class BaseTileScript : MonoBehaviour {
 	}
 
 	// Iterate across the tiles that are adjacent to you and report whether the walker can move into each of them.
-	public bool[] getValidMoves(bool force=false) {
+	public string[] getValidMoves(bool force=false) {
 		if (this.amBlinking) {
 			StopCoroutine ("blink");
 			this.myRenderer.material.color = this.initialColor;
@@ -64,7 +65,7 @@ public class BaseTileScript : MonoBehaviour {
 		if (adjacent_tiles == null || force) {
 			adjacent_tiles = getAdjacentTiles();
 		}
-		bool[] valid_moves = new bool[4];
+		string[] valid_moves = new string[4];
 		valid_moves [0] = is_valid_move (adjacent_tiles [0], 0);
 		valid_moves [1] = is_valid_move (adjacent_tiles [1], 1);
 		valid_moves [2] = is_valid_move (adjacent_tiles [2], 2);
@@ -74,8 +75,8 @@ public class BaseTileScript : MonoBehaviour {
 	}
 
 	// Can a walker pass through me from the given direction?
-	public bool canPass(int dir){
-		return this.amPassable[dir];
+	public string canPass(int dir){
+		return this.amPassable[dir].ToString();
 	}
 
 	public void blinkUntilSteppedOn(float cadence=0.5f){
