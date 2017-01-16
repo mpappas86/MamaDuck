@@ -19,6 +19,8 @@ public class TimerManager : MonoBehaviour {
 		timer = 0;
 		cutoffColors.Add (Color.green);
 		cutoffColors.Add (Color.black);
+		cutoffColors.Add (Color.blue);
+		cutoffColors.Add (Color.magenta);
 		cutoffColors.Add (Color.red);
 	}
 	

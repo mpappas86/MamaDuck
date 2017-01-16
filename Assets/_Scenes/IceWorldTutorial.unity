@@ -4364,8 +4364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b7f9fc091894ed486fad8cfe598d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeCutoffs: 
-  cutoffBonuses: 
+  timeCutoffs: 0a000000140000002d0000003c000000
+  cutoffBonuses: f40100002c0100006400000000000000
   timerText: {fileID: 358889236}
 --- !u!4 &1604120574
 Transform:
