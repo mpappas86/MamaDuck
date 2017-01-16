@@ -26,7 +26,12 @@ public class TileTrigger : MonoBehaviour {
 		BaseTileMover btm = (BaseTileMover) obj.GetComponent(typeof(BaseTileMover));
 		btm.setValidMoves(valid_moves);
 		if (tileQuality == "current") {
-			btm.setTileQuality(tileQuality, bts.getCurrentDirection());
+			int duckling_threshold = bts.getDucklingThreshold();
+			if (duckling_threshold > 0){
+				btm.setTileQuality(tileQuality, bts.getCurrentDirection(), duckling_threshold); 
+			} else {
+				btm.setTileQuality(tileQuality, bts.getCurrentDirection());
+			}
 		} else if (tileQuality == "geyser") {
 			btm.setTileQuality (tileQuality, bts.geyserMultiplier);
 		} else {

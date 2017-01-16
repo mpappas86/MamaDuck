@@ -20,6 +20,7 @@ public class BaseTileScript : MonoBehaviour {
 	};
 	public int current_flow_direction = -1;
 	public int geyserMultiplier = 0;                     // Geyser multiplier - if set, you move 1 + (ducklings*multiplier) spaces
+	public int current_critical_duckling_count = -1;     // Number of ducklings needed to bypass current.
 
 	void Start(){
 		myRenderer = this.transform.FindChild("Tile").GetComponent<Renderer> ();
@@ -77,6 +78,10 @@ public class BaseTileScript : MonoBehaviour {
 	// Can a walker pass through me from the given direction?
 	public string canPass(int dir){
 		return this.amPassable[dir].ToString();
+	}
+
+	public int getDucklingThreshold(){
+		return this.current_critical_duckling_count;
 	}
 
 	public void blinkUntilSteppedOn(float cadence=0.5f){

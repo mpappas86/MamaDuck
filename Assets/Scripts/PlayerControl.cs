@@ -80,6 +80,10 @@ public class PlayerControl : BaseTileMover {
 	public override int getGeyserFlightKeyValue(){
 		return this.myDucklings.Count;
 	}
+
+	public override int getCurrentCrossingKeyValue(){
+		return this.myDucklings.Count;
+	}
 	
 	// Text setter based on how many ducklings we've collected.
 	string DucklingText(){

@@ -75,6 +75,10 @@ public class BaseTileMover : MonoBehaviour {
 		return 0;
 	}
 
+	public virtual int getCurrentCrossingKeyValue(){
+		return 0;
+	}
+
 	public int getBaseGeyserFlight(int geyserMultiplier){
 		int key_value = getGeyserFlightKeyValue();
 		if (key_value == 0) {
@@ -84,6 +88,18 @@ public class BaseTileMover : MonoBehaviour {
 		}
 	}
 
+
+	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
+	public void setTileQuality(string tileQuality, int relevant_int, int second_int){
+		if (tileQuality == "current") {
+			if (getCurrentCrossingKeyValue() < second_int){
+				this.momentumMoving = true;
+				this.nextDir = relevant_int;
+			} else {
+				this.momentumMoving = false;
+			}
+		}
+	}
 
 	// Public setter for TileTrigger - TileTrigger calls this to tell us whether we should be sliding over a tile.
 	public void setTileQuality(string tileQuality, int relevant_int){
