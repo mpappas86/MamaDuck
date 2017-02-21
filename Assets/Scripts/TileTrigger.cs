@@ -5,6 +5,7 @@ public class TileTrigger : MonoBehaviour {
 
 	public GameObject amStartingTileFor = null;  // Designates whether or not this tile is the tile Mama starts on.
 	private BaseTileScript bts;          // Pointer to this Tile's BaseTileScript for access to public methods.
+    private SfxHandler sfxScript;
 
 	void Start(){
 		bts = (BaseTileScript) this.gameObject.GetComponentInParent (typeof(BaseTileScript));
@@ -13,7 +14,9 @@ public class TileTrigger : MonoBehaviour {
 		if (amStartingTileFor != null) {
 			OnTriggerEnter(amStartingTileFor.GetComponent<Collider>());
 		}
-	}
+
+        this.sfxScript = (SfxHandler)GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(SfxHandler));
+    }
 
 	// If a BaseTileMover steps onto us, we set their valid moves.
 	void OnTriggerEnter(Collider other) {
@@ -25,18 +28,20 @@ public class TileTrigger : MonoBehaviour {
 	void setCurrentStatus(Collider obj, string[] valid_moves, string tileQuality){
 		BaseTileMover btm = (BaseTileMover) obj.GetComponent(typeof(BaseTileMover));
 		btm.setValidMoves(valid_moves);
-		if (tileQuality == "current") {
-			int duckling_threshold = bts.getDucklingThreshold();
-			if (duckling_threshold > 0){
-				btm.setTileQuality(tileQuality, bts.getCurrentDirection(), duckling_threshold); 
-			} else {
-				btm.setTileQuality(tileQuality, bts.getCurrentDirection());
-			}
-		} else if (tileQuality == "geyser") {
-			btm.setTileQuality (tileQuality, bts.geyserMultiplier);
-		} else {
+        if (tileQuality == "current") {
+            int duckling_threshold = bts.getDucklingThreshold();
+            if (duckling_threshold > 0) {
+                btm.setTileQuality(tileQuality, bts.getCurrentDirection(), duckling_threshold);
+            } else {
+                btm.setTileQuality(tileQuality, bts.getCurrentDirection());
+            }
+        } else if (tileQuality == "geyser") {
+            btm.setTileQuality(tileQuality, bts.geyserMultiplier);  
+        } else {
 			btm.setTileQuality (tileQuality);
 		}
+
+        if (tileQuality == "slide") { sfxScript.playAudio(7); }
 	}
 
 }
